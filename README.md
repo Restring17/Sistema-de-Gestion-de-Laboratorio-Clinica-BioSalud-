@@ -1,2 +1,2 @@
-# Sistema-de-Gestion-de-Laboratorio-Cl-nica-BioSalud-
+# Sistema-de-Gestion-de-Laboratorio-Clinica-BioSalud-
 Proyecto Diseño de Patrones UTP 
