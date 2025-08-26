@@ -8,7 +8,7 @@ package LSP.Ejercicio2;
  *
  * @author User
  */
-public class main {
+public class Main {
     public static void main(String[] args) {
         Paciente paciente = new Paciente("Carla","Celestino Morales","77335049","001");
         Tecnico tecnico = new TecnicoLaboratorio("Diana Flores");

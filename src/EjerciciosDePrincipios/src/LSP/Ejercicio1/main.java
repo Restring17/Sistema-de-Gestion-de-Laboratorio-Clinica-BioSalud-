@@ -4,7 +4,7 @@ package LSP.Ejercicio1;
  *
  * @author User
  */
-public class main {
+public class Main {
     public static void main(String[] args) {
         Persona persona;
 

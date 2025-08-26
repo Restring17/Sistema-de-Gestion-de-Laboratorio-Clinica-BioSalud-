@@ -1,6 +1,6 @@
 
 
-package ejercicioSRP1;
+package SRP.Ejercicio1;
 
 
 public class Examen {
