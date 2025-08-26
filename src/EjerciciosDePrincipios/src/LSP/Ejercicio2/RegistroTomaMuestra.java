@@ -22,8 +22,8 @@ public class RegistroTomaMuestra {
         return "Muestra ID: " + idMuestra + "\n" +
            "Tipo de Examen: " + tipoExamen + "\n" +
            "Técnico: " + tecnico + "\n" +
-           "Fecha y Hora: " + fechaHora ;
-    }
+           "Fecha y Hora: " + fechaHora;
+    }
 }
     
     

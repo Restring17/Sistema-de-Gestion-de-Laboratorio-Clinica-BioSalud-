@@ -13,8 +13,10 @@ public abstract class Tecnico {
         return nombre;
     }
 
-    public abstract void realizarExamen(String tipoExamen);
+    public abstract void realizarExamen(String tipoExamen);
+    
 }
+            
     
 
 

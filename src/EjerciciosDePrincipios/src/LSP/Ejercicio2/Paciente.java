@@ -19,8 +19,7 @@ public class Paciente {
 
     public String getId() {
         return id;
-    }
-    
+    }
 }
     
     

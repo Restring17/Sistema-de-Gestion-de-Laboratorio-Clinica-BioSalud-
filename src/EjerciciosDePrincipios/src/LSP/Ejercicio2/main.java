@@ -18,6 +18,5 @@ public class main {
         RegistroTomaMuestra registro = new RegistroTomaMuestra(paciente, tecnico, tipoExamen);
         System.out.println("Registro de toma de muestra guardado:");
         System.out.println(registro);
-      
-    }
+    }
 }
