@@ -2,25 +2,18 @@
 package LSP.Ejercicio2;
 
 
-public class TecnicoLaboratorio implements Tecnico {
-    String nombre;
-
-    public TecnicoLaboratorio(String nombre) {
-        this.nombre = nombre;
-    }
-    
-    @Override
-    public String getNombre() {
-        return nombre;
+public class TecnicoLaboratorio extends Tecnico {
+   
+  public TecnicoLaboratorio(String nombre) {
+        super(nombre); // Llama al constructor de la clase abstracta
     }
 
     @Override
     public void realizarExamen(String tipoExamen) {
         System.out.println(nombre + " está realizando el examen: " + tipoExamen);
-    }
-
- 
+    }
 }
 
     
+
 
