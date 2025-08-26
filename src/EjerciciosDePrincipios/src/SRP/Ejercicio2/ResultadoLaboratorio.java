@@ -8,7 +8,7 @@ package SRP.Ejercicio2;
  *
  * @author KEVIN
  */
-public class ResultadoLaboratorio {
+public class ResultadoLaboratorio implements Validable {
     private String idResultado;
     private String valores;
     private boolean validado;
@@ -19,13 +19,20 @@ public class ResultadoLaboratorio {
         this.validado = false;
     }
 
+    @Override
     public void validar() {
         this.validado = true;
     }
 
+    @Override
+    public boolean isValidado() {
+        return validado;
+    }
+
     public String getReporte() {
-        return "Resultado ID: " + idResultado + 
-               "\nValores: " + valores + 
+        return "Resultado ID: " + idResultado +
+               "\nValores: " + valores +
                "\nValidado: " + (validado ? "Sí" : "No");
     }
 }
+

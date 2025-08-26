@@ -8,26 +8,16 @@ package SRP.Ejercicio2;
  *
  * @author KEVIN
  */
-// Clase Paciente
-public class Paciente {
-
-    private String idPaciente;
-    private String nombres;
-    private String apellidos;
+public class Paciente extends Persona {
     private String email;
 
-    public Paciente(String idPaciente, String nombres, String apellidos, String email) {
-        this.idPaciente = idPaciente;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
+    public Paciente(String id, String nombres, String apellidos, String email) {
+        super(id, nombres, apellidos);
         this.email = email;
-    }
-
-    public String getNombreCompleto() {
-        return nombres + " " + apellidos;
     }
 
     public String getEmail() {
         return email;
     }
 }
+

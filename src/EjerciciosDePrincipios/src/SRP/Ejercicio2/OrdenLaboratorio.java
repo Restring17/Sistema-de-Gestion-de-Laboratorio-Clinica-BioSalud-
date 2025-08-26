@@ -9,7 +9,6 @@ package SRP.Ejercicio2;
  * @author KEVIN
  */
 public class OrdenLaboratorio {
-
     private String idOrden;
     private String tipoExamen;
     private Paciente paciente;

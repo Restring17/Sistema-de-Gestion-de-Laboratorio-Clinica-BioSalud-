@@ -8,23 +8,16 @@ package SRP.Ejercicio2;
  *
  * @author KEVIN
  */
-public class Medico {
-
-    private String idMedico;
-    private String nombres;
+public class Medico extends Persona {
     private String especialidad;
 
-    public Medico(String idMedico, String nombres, String especialidad) {
-        this.idMedico = idMedico;
-        this.nombres = nombres;
+    public Medico(String id, String nombres, String apellidos, String especialidad) {
+        super(id, nombres, apellidos);
         this.especialidad = especialidad;
-    }
-
-    public String getNombres() {
-        return nombres;
     }
 
     public String getEspecialidad() {
         return especialidad;
     }
 }
+

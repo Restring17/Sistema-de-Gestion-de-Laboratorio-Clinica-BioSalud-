@@ -8,7 +8,6 @@ package SRP.Ejercicio2;
  *
  * @author KEVIN
  */
-// Clase Factura
 public class Factura {
     private String idFactura;
     private double monto;
@@ -26,3 +25,4 @@ public class Factura {
                "\nMonto: $" + monto;
     }
 }
+
