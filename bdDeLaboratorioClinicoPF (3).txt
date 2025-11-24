@@ -1,0 +1,790 @@
+-- 1. Tablas base
+CREATE TABLE Medico(
+  idMedico INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  apellido VARCHAR(100) NOT NULL,
+  especialidad VARCHAR(100) NOT NULL,
+  cmp VARCHAR(20),
+  telefono VARCHAR(20),
+  correo VARCHAR(100)
+);
+
+CREATE TABLE Paciente(
+  idPaciente INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  apellido VARCHAR(100) NOT NULL,
+  dni CHAR(8) UNIQUE NOT NULL,
+  telefono VARCHAR(20),
+  direccion VARCHAR(150),
+  correo VARCHAR(100)
+);
+
+
+CREATE TABLE TecnicoLaboratorio(
+  idTecnico INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  apellido VARCHAR(100) NOT NULL,
+  dni CHAR(8),
+  turno VARCHAR(20),
+  especialidad VARCHAR(100),
+  telefono VARCHAR(20)
+);
+
+
+-- 2. Tablas dependientes
+CREATE TABLE OrdenLaboratorio(
+  idOrden INT AUTO_INCREMENT PRIMARY KEY,
+  idPaciente INT NOT NULL,
+  idMedico INT NOT NULL,
+  fechaEmision DATE NOT NULL,
+  tipoExamen VARCHAR(100) NOT NULL,
+  prioridad VARCHAR(20),
+  estado VARCHAR(30),
+  FOREIGN KEY(idPaciente) REFERENCES Paciente(idPaciente),
+  FOREIGN KEY(idMedico) REFERENCES Medico(idMedico)
+);
+
+
+-- 3. Tablas secundarias
+CREATE TABLE ResultadoLaboratorio(
+  idResultado INT AUTO_INCREMENT PRIMARY KEY,
+  idOrden INT NOT NULL,
+  parametro VARCHAR(100),
+  valor VARCHAR(100),
+  unidad VARCHAR(50),
+  referencia VARCHAR(100),
+  fechaResultado DATE,
+  estado VARCHAR(30),
+  FOREIGN KEY(idOrden) REFERENCES OrdenLaboratorio(idOrden)
+);
+
+
+CREATE TABLE TomaMuestra(
+  idToma INT AUTO_INCREMENT PRIMARY KEY,
+  idOrden INT NOT NULL,
+  idTecnico INT NOT NULL,
+  fechaToma DATETIME NOT NULL,
+  tipoMuestra VARCHAR(50),
+  observaciones VARCHAR(255),
+  estado VARCHAR(30),
+  FOREIGN KEY(idOrden) REFERENCES OrdenLaboratorio(idOrden),
+  FOREIGN KEY(idTecnico) REFERENCES TecnicoLaboratorio(idTecnico)
+);
+
+
+-- 4. Usuarios y facturación
+CREATE TABLE Usuario(
+  idUsuario INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  rol VARCHAR(50) NOT NULL,
+  estado VARCHAR(20)
+);
+
+
+CREATE TABLE Factura(
+  idFactura INT AUTO_INCREMENT PRIMARY KEY,
+  idPaciente INT NOT NULL,
+  fechaEmision DATE NOT NULL,
+  total DECIMAL(10,2) NOT NULL,
+  medioPago VARCHAR(50),
+  estado VARCHAR(30),
+  FOREIGN KEY(idPaciente) REFERENCES Paciente(idPaciente)
+);
+
+
+CREATE TABLE DetalleFactura(
+  idDetalle INT AUTO_INCREMENT PRIMARY KEY,
+  idFactura INT NOT NULL,
+  descripcion VARCHAR(100),
+  cantidad INT NOT NULL,
+  precioUnitario DECIMAL(10,2),
+  subtotal DECIMAL(10,2),
+  FOREIGN KEY(idFactura) REFERENCES Factura(idFactura)
+);
+
+
+
+
+----------------------------------------------------------
+-- PROCEDIMIENTOS ALMACENADOS – Medico
+----------------------------------------------------------
+
+-- INSERT
+DELIMITER //
+CREATE PROCEDURE sp_insert_medico(
+  IN p_nombre VARCHAR(100),
+  IN p_apellido VARCHAR(100),
+  IN p_especialidad VARCHAR(100),
+  IN p_cmp VARCHAR(20),
+  IN p_telefono VARCHAR(20),
+  IN p_correo VARCHAR(100)
+)
+BEGIN
+  INSERT INTO Medico(nombre, apellido, especialidad, cmp, telefono, correo)
+  VALUES(p_nombre, p_apellido, p_especialidad, p_cmp, p_telefono, p_correo);
+END //
+DELIMITER ;
+
+-- UPDATE
+DELIMITER //
+CREATE PROCEDURE sp_update_medico(
+  IN p_idMedico INT,
+  IN p_nombre VARCHAR(100),
+  IN p_apellido VARCHAR(100),
+  IN p_especialidad VARCHAR(100),
+  IN p_cmp VARCHAR(20),
+  IN p_telefono VARCHAR(20),
+  IN p_correo VARCHAR(100)
+)
+BEGIN
+  UPDATE Medico
+  SET nombre=p_nombre, apellido=p_apellido, especialidad=p_especialidad,
+      cmp=p_cmp, telefono=p_telefono, correo=p_correo
+  WHERE idMedico = p_idMedico;
+END //
+DELIMITER ;
+
+-- DELETE
+DELIMITER //
+CREATE PROCEDURE sp_delete_medico(IN p_idMedico INT)
+BEGIN
+  DELETE FROM Medico WHERE idMedico = p_idMedico;
+END //
+DELIMITER ;
+
+-- LIST
+DELIMITER //
+CREATE PROCEDURE sp_list_medico()
+BEGIN
+  SELECT * FROM Medico;
+END //
+DELIMITER ;
+
+-- FIND
+DELIMITER //
+CREATE PROCEDURE sp_find_medico(IN p_idMedico INT)
+BEGIN
+  SELECT * FROM Medico WHERE idMedico = p_idMedico;
+END //
+DELIMITER ;
+ 
+----------------------------------------------------------
+-- PROCEDIMIENTOS ALMACENADOS – PACIENTE
+----------------------------------------------------------
+
+--Paciente
+DELIMITER //
+CREATE PROCEDURE sp_insert_paciente(
+  IN p_nombre VARCHAR(100),
+  IN p_apellido VARCHAR(100),
+  IN p_dni CHAR(8),
+  IN p_telefono VARCHAR(20),
+  IN p_direccion VARCHAR(150),
+  IN p_correo VARCHAR(100)
+)
+BEGIN
+  INSERT INTO Paciente(nombre, apellido, dni, telefono, direccion, correo)
+  VALUES(p_nombre, p_apellido, p_dni, p_telefono, p_direccion, p_correo);
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_update_paciente(
+  IN p_idPaciente INT,
+  IN p_nombre VARCHAR(100),
+  IN p_apellido VARCHAR(100),
+  IN p_dni CHAR(8),
+  IN p_telefono VARCHAR(20),
+  IN p_direccion VARCHAR(150),
+  IN p_correo VARCHAR(100)
+)
+BEGIN
+  UPDATE Paciente
+  SET nombre = p_nombre,
+      apellido = p_apellido,
+      dni = p_dni,
+      telefono = p_telefono,
+      direccion = p_direccion,
+      correo = p_correo
+  WHERE idPaciente = p_idPaciente;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_delete_paciente(
+  IN p_idPaciente INT
+)
+BEGIN
+  DELETE FROM Paciente
+  WHERE idPaciente = p_idPaciente;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_list_paciente()
+BEGIN
+  SELECT * FROM Paciente;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_find_paciente(
+  IN p_idPaciente INT
+)
+BEGIN
+  SELECT * FROM Paciente
+  WHERE idPaciente = p_idPaciente;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+-- PROCEDIMIENTOS ALMACENADOS – tecnico
+----------------------------------------------------------
+
+
+--tecnico
+DELIMITER //
+CREATE PROCEDURE sp_insert_tecnico(
+  IN p_nombre VARCHAR(100),
+  IN p_apellido VARCHAR(100),
+  IN p_dni CHAR(8),
+  IN p_turno VARCHAR(20),
+  IN p_especialidad VARCHAR(100),
+  IN p_telefono VARCHAR(20)
+)
+BEGIN
+  INSERT INTO TecnicoLaboratorio(nombre, apellido, dni, turno, especialidad, telefono)
+  VALUES(p_nombre, p_apellido, p_dni, p_turno, p_especialidad, p_telefono);
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_update_tecnico(
+  IN p_idTecnico INT,
+  IN p_nombre VARCHAR(100),
+  IN p_apellido VARCHAR(100),
+  IN p_dni CHAR(8),
+  IN p_turno VARCHAR(20),
+  IN p_especialidad VARCHAR(100),
+  IN p_telefono VARCHAR(20)
+)
+BEGIN
+  UPDATE TecnicoLaboratorio
+  SET nombre = p_nombre,
+      apellido = p_apellido,
+      dni = p_dni,
+      turno = p_turno,
+      especialidad = p_especialidad,
+      telefono = p_telefono
+  WHERE idTecnico = p_idTecnico;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_delete_tecnico(
+  IN p_idTecnico INT
+)
+BEGIN
+  DELETE FROM TecnicoLaboratorio
+  WHERE idTecnico = p_idTecnico;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE sp_list_tecnico()
+BEGIN
+  SELECT * FROM TecnicoLaboratorio;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE sp_find_tecnico(
+  IN p_idTecnico INT
+)
+BEGIN
+  SELECT * FROM TecnicoLaboratorio
+  WHERE idTecnico = p_idTecnico;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+-- PROCEDIMIENTOS ALMACENADOS – ORDEN DE LABORATORIO
+----------------------------------------------------------
+
+-- INSERT
+DELIMITER //
+CREATE PROCEDURE sp_insert_orden(
+  IN p_idPaciente INT,
+  IN p_idMedico INT,
+  IN p_fechaEmision DATE,
+  IN p_tipoExamen VARCHAR(100),
+  IN p_prioridad VARCHAR(20),
+  IN p_estado VARCHAR(30)
+)
+BEGIN
+  INSERT INTO OrdenLaboratorio(idPaciente, idMedico, fechaEmision, tipoExamen, prioridad, estado)
+  VALUES(p_idPaciente, p_idMedico, p_fechaEmision, p_tipoExamen, p_prioridad, p_estado);
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- UPDATE
+DELIMITER //
+CREATE PROCEDURE sp_update_orden(
+  IN p_idOrden INT,
+  IN p_idPaciente INT,
+  IN p_idMedico INT,
+  IN p_fechaEmision DATE,
+  IN p_tipoExamen VARCHAR(100),
+  IN p_prioridad VARCHAR(20),
+  IN p_estado VARCHAR(30)
+)
+BEGIN
+  UPDATE OrdenLaboratorio
+  SET idPaciente   = p_idPaciente,
+      idMedico     = p_idMedico,
+      fechaEmision = p_fechaEmision,
+      tipoExamen   = p_tipoExamen,
+      prioridad    = p_prioridad,
+      estado       = p_estado
+  WHERE idOrden = p_idOrden;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- DELETE
+DELIMITER //
+CREATE PROCEDURE sp_delete_orden(
+  IN p_idOrden INT
+)
+BEGIN
+  DELETE FROM OrdenLaboratorio
+  WHERE idOrden = p_idOrden;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- LIST
+DELIMITER //
+CREATE PROCEDURE sp_list_orden()
+BEGIN
+  SELECT * FROM OrdenLaboratorio;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- FIND
+DELIMITER //
+CREATE PROCEDURE sp_find_orden(
+  IN p_idOrden INT
+)
+BEGIN
+  SELECT * FROM OrdenLaboratorio
+  WHERE idOrden = p_idOrden;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+-- PROCEDIMIENTOS – RESULTADOLABORATORIO
+----------------------------------------------------------
+
+-- INSERT
+DELIMITER //
+CREATE PROCEDURE sp_insert_resultado(
+  IN p_idOrden INT,
+  IN p_parametro VARCHAR(100),
+  IN p_valor VARCHAR(100),
+  IN p_unidad VARCHAR(50),
+  IN p_referencia VARCHAR(100),
+  IN p_fechaResultado DATE,
+  IN p_estado VARCHAR(30)
+)
+BEGIN
+  INSERT INTO ResultadoLaboratorio(idOrden, parametro, valor, unidad, referencia, fechaResultado, estado)
+  VALUES(p_idOrden, p_parametro, p_valor, p_unidad, p_referencia, p_fechaResultado, p_estado);
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- UPDATE
+DELIMITER //
+CREATE PROCEDURE sp_update_resultado(
+  IN p_idResultado INT,
+  IN p_idOrden INT,
+  IN p_parametro VARCHAR(100),
+  IN p_valor VARCHAR(100),
+  IN p_unidad VARCHAR(50),
+  IN p_referencia VARCHAR(100),
+  IN p_fechaResultado DATE,
+  IN p_estado VARCHAR(30)
+)
+BEGIN
+  UPDATE ResultadoLaboratorio
+  SET idOrden = p_idOrden,
+      parametro = p_parametro,
+      valor = p_valor,
+      unidad = p_unidad,
+      referencia = p_referencia,
+      fechaResultado = p_fechaResultado,
+      estado = p_estado
+  WHERE idResultado = p_idResultado;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- DELETE
+DELIMITER //
+CREATE PROCEDURE sp_delete_resultado(
+  IN p_idResultado INT
+)
+BEGIN
+  DELETE FROM ResultadoLaboratorio
+  WHERE idResultado = p_idResultado;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- LIST
+DELIMITER //
+CREATE PROCEDURE sp_list_resultado()
+BEGIN
+  SELECT * FROM ResultadoLaboratorio;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- FIND
+DELIMITER //
+CREATE PROCEDURE sp_find_resultado(
+  IN p_idResultado INT
+)
+BEGIN
+  SELECT * FROM ResultadoLaboratorio
+  WHERE idResultado = p_idResultado;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+-- PROCEDIMIENTOS – TOMAMUESTRA
+----------------------------------------------------------
+
+-- INSERT
+DELIMITER //
+CREATE PROCEDURE sp_insert_toma(
+  IN p_idOrden INT,
+  IN p_idTecnico INT,
+  IN p_fechaToma DATETIME,
+  IN p_tipoMuestra VARCHAR(50),
+  IN p_observaciones VARCHAR(255),
+  IN p_estado VARCHAR(30)
+)
+BEGIN
+  INSERT INTO TomaMuestra(idOrden, idTecnico, fechaToma, tipoMuestra, observaciones, estado)
+  VALUES(p_idOrden, p_idTecnico, p_fechaToma, p_tipoMuestra, p_observaciones, p_estado);
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- UPDATE
+DELIMITER //
+CREATE PROCEDURE sp_update_toma(
+  IN p_idToma INT,
+  IN p_idOrden INT,
+  IN p_idTecnico INT,
+  IN p_fechaToma DATETIME,
+  IN p_tipoMuestra VARCHAR(50),
+  IN p_observaciones VARCHAR(255),
+  IN p_estado VARCHAR(30)
+)
+BEGIN
+  UPDATE TomaMuestra
+  SET idOrden = p_idOrden,
+      idTecnico = p_idTecnico,
+      fechaToma = p_fechaToma,
+      tipoMuestra = p_tipoMuestra,
+      observaciones = p_observaciones,
+      estado = p_estado
+  WHERE idToma = p_idToma;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- DELETE
+DELIMITER //
+CREATE PROCEDURE sp_delete_toma(
+  IN p_idToma INT
+)
+BEGIN
+  DELETE FROM TomaMuestra
+  WHERE idToma = p_idToma;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- LIST
+DELIMITER //
+CREATE PROCEDURE sp_list_toma()
+BEGIN
+  SELECT * FROM TomaMuestra;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- FIND
+DELIMITER //
+CREATE PROCEDURE sp_find_toma(
+  IN p_idToma INT
+)
+BEGIN
+  SELECT * FROM TomaMuestra
+  WHERE idToma = p_idToma;
+END //
+DELIMITER ;
+
+
+----------------------------------------------------------
+-- PROCEDIMIENTOS – USUARIO
+----------------------------------------------------------
+
+-- INSERT
+DELIMITER //
+CREATE PROCEDURE sp_insert_usuario(
+  IN p_username VARCHAR(50),
+  IN p_password VARCHAR(100),
+  IN p_rol VARCHAR(50),
+  IN p_estado VARCHAR(20)
+)
+BEGIN
+  INSERT INTO Usuario(username, password, rol, estado)
+  VALUES(p_username, p_password, p_rol, p_estado);
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- UPDATE
+DELIMITER //
+CREATE PROCEDURE sp_update_usuario(
+  IN p_idUsuario INT,
+  IN p_username VARCHAR(50),
+  IN p_password VARCHAR(100),
+  IN p_rol VARCHAR(50),
+  IN p_estado VARCHAR(20)
+)
+BEGIN
+  UPDATE Usuario
+  SET username = p_username,
+      password = p_password,
+      rol = p_rol,
+      estado = p_estado
+  WHERE idUsuario = p_idUsuario;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- DELETE
+DELIMITER //
+CREATE PROCEDURE sp_delete_usuario(
+  IN p_idUsuario INT
+)
+BEGIN
+  DELETE FROM Usuario
+  WHERE idUsuario = p_idUsuario;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- LIST
+DELIMITER //
+CREATE PROCEDURE sp_list_usuario()
+BEGIN
+  SELECT * FROM Usuario;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- FIND
+DELIMITER //
+CREATE PROCEDURE sp_find_usuario(
+  IN p_idUsuario INT
+)
+BEGIN
+  SELECT * FROM Usuario
+  WHERE idUsuario = p_idUsuario;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+-- PROCEDIMIENTOS – FACTURA
+----------------------------------------------------------
+
+-- INSERT
+DELIMITER //
+CREATE PROCEDURE sp_insert_factura(
+  IN p_idPaciente INT,
+  IN p_fechaEmision DATE,
+  IN p_total DECIMAL(10,2),
+  IN p_medioPago VARCHAR(50),
+  IN p_estado VARCHAR(30)
+)
+BEGIN
+  INSERT INTO Factura(idPaciente, fechaEmision, total, medioPago, estado)
+  VALUES(p_idPaciente, p_fechaEmision, p_total, p_medioPago, p_estado);
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- UPDATE
+DELIMITER //
+CREATE PROCEDURE sp_update_factura(
+  IN p_idFactura INT,
+  IN p_idPaciente INT,
+  IN p_fechaEmision DATE,
+  IN p_total DECIMAL(10,2),
+  IN p_medioPago VARCHAR(50),
+  IN p_estado VARCHAR(30)
+)
+BEGIN
+  UPDATE Factura
+  SET idPaciente = p_idPaciente,
+      fechaEmision = p_fechaEmision,
+      total = p_total,
+      medioPago = p_medioPago,
+      estado = p_estado
+  WHERE idFactura = p_idFactura;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- DELETE
+DELIMITER //
+CREATE PROCEDURE sp_delete_factura(
+  IN p_idFactura INT
+)
+BEGIN
+  DELETE FROM Factura
+  WHERE idFactura = p_idFactura;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- LIST
+DELIMITER //
+CREATE PROCEDURE sp_list_factura()
+BEGIN
+  SELECT * FROM Factura;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- FIND
+DELIMITER //
+CREATE PROCEDURE sp_find_factura(
+  IN p_idFactura INT
+)
+BEGIN
+  SELECT * FROM Factura
+  WHERE idFactura = p_idFactura;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+-- PROCEDIMIENTOS – DETALLEFACTURA
+----------------------------------------------------------
+
+-- INSERT
+DELIMITER //
+CREATE PROCEDURE sp_insert_detalle(
+  IN p_idFactura INT,
+  IN p_descripcion VARCHAR(100),
+  IN p_cantidad INT,
+  IN p_precioUnitario DECIMAL(10,2),
+  IN p_subtotal DECIMAL(10,2)
+)
+BEGIN
+  INSERT INTO DetalleFactura(idFactura, descripcion, cantidad, precioUnitario, subtotal)
+  VALUES(p_idFactura, p_descripcion, p_cantidad, p_precioUnitario, p_subtotal);
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- UPDATE
+DELIMITER //
+CREATE PROCEDURE sp_update_detalle(
+  IN p_idDetalle INT,
+  IN p_idFactura INT,
+  IN p_descripcion VARCHAR(100),
+  IN p_cantidad INT,
+  IN p_precioUnitario DECIMAL(10,2),
+  IN p_subtotal DECIMAL(10,2)
+)
+BEGIN
+  UPDATE DetalleFactura
+  SET idFactura = p_idFactura,
+      descripcion = p_descripcion,
+      cantidad = p_cantidad,
+      precioUnitario = p_precioUnitario,
+      subtotal = p_subtotal
+  WHERE idDetalle = p_idDetalle;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- DELETE
+DELIMITER //
+CREATE PROCEDURE sp_delete_detalle(
+  IN p_idDetalle INT
+)
+BEGIN
+  DELETE FROM DetalleFactura
+  WHERE idDetalle = p_idDetalle;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- LIST
+DELIMITER //
+CREATE PROCEDURE sp_list_detalle()
+BEGIN
+  SELECT * FROM DetalleFactura;
+END //
+DELIMITER ;
+
+----------------------------------------------------------
+
+-- FIND
+DELIMITER //
+CREATE PROCEDURE sp_find_detalle(
+  IN p_idDetalle INT
+)
+BEGIN
+  SELECT * FROM DetalleFactura
+  WHERE idDetalle = p_idDetalle;
+END //
+DELIMITER ;
+
+
