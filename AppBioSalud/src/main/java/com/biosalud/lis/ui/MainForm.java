@@ -4,6 +4,9 @@
  */
 package com.biosalud.lis.ui;
 
+import com.biosalud.lis.model.Usuario;
+import java.awt.BorderLayout;
+
 /**
  *
  * @author folli
@@ -15,6 +18,18 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
+        setTitle("BIOSALUD - Módulos del Sistema");
+        pack();
+        setLocationRelativeTo(null);
+    }
+
+    public MainForm(Usuario usuario) {
+        initComponents();
+        setTitle("BIOSALUD - Módulos del Sistema");
+        pack();
+        setLocationRelativeTo(null);
+
+        panelContenido.setLayout(new BorderLayout());
     }
 
     /**
@@ -26,115 +41,357 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
-        jMenu8 = new javax.swing.JMenu();
-        jMenu9 = new javax.swing.JMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnCerrarSesion = new javax.swing.JButton();
+        btnAdministrarUsuarios = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        btnPacientes = new javax.swing.JButton();
+        btnMedicos = new javax.swing.JButton();
+        btnOrdenesLaboratorio = new javax.swing.JButton();
+        btnTomaMuestras = new javax.swing.JButton();
+        btnResultados = new javax.swing.JButton();
+        btnValidarResultados = new javax.swing.JButton();
+        btnFacturacion = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        btnDetalleFacturas = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        btnAcerca = new javax.swing.JButton();
+        panelContenido = new javax.swing.JPanel();
+        btnAyuda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenu1.setText("Archivo");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jMenuItem1.setText("Cerrar Sesion");
-        jMenu1.add(jMenuItem1);
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Bienvenido!");
 
-        jMenuItem2.setText("Salir del Sistema");
-        jMenu1.add(jMenuItem2);
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("@Usuario");
 
-        jMenuBar1.add(jMenu1);
+        btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCerrarSesion.setText("Cerrar Sesión");
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesionActionPerformed(evt);
+            }
+        });
 
-        jMenu2.setText("Pacientes");
+        btnAdministrarUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAdministrarUsuarios.setText("Administrar Usuarios");
+        btnAdministrarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministrarUsuariosActionPerformed(evt);
+            }
+        });
 
-        jMenuItem3.setText("Registrar Paciente");
-        jMenu2.add(jMenuItem3);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/BioSalud_logo.png"))); // NOI18N
 
-        jMenuItem4.setText("Buscar Paciente");
-        jMenu2.add(jMenuItem4);
+        btnPacientes.setText("Pacientes");
+        btnPacientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPacientesActionPerformed(evt);
+            }
+        });
 
-        jMenuBar1.add(jMenu2);
+        btnMedicos.setText("Médicos");
+        btnMedicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMedicosActionPerformed(evt);
+            }
+        });
 
-        jMenu3.setText("Medicos");
-        jMenuBar1.add(jMenu3);
+        btnOrdenesLaboratorio.setText("Ordenes de laboratorio");
+        btnOrdenesLaboratorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenesLaboratorioActionPerformed(evt);
+            }
+        });
 
-        jMenu4.setText("Laboratorio");
+        btnTomaMuestras.setText("Toma de muestras");
+        btnTomaMuestras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTomaMuestrasActionPerformed(evt);
+            }
+        });
 
-        jMenuItem5.setText("Registrar Orden");
-        jMenu4.add(jMenuItem5);
+        btnResultados.setText("Resultados");
+        btnResultados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResultadosActionPerformed(evt);
+            }
+        });
 
-        jMenuItem6.setText("Buscar Orden");
-        jMenu4.add(jMenuItem6);
+        btnValidarResultados.setText("Validar Resultados");
+        btnValidarResultados.setBorderPainted(false);
+        btnValidarResultados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnValidarResultadosActionPerformed(evt);
+            }
+        });
 
-        jMenuBar1.add(jMenu4);
+        btnFacturacion.setText("Facturacion");
+        btnFacturacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFacturacionActionPerformed(evt);
+            }
+        });
 
-        jMenu5.setText("Muestras");
+        btnReportes.setText("Reportes");
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
 
-        jMenuItem7.setText("Registrar Muestra");
-        jMenu5.add(jMenuItem7);
+        jLabel6.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("MODULOS");
 
-        jMenuItem8.setText("Ver Muestras Registradas");
-        jMenu5.add(jMenuItem8);
+        btnDetalleFacturas.setText("Buscar Facturas");
+        btnDetalleFacturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetalleFacturasActionPerformed(evt);
+            }
+        });
 
-        jMenuBar1.add(jMenu5);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addGap(24, 24, 24))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(btnAdministrarUsuarios))
+                            .addComponent(btnMedicos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnOrdenesLaboratorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(15, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnValidarResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTomaMuestras, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnDetalleFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCerrarSesion)
+                .addGap(37, 37, 37))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addGap(27, 27, 27)
+                .addComponent(jLabel6)
+                .addGap(26, 26, 26)
+                .addComponent(btnPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(btnOrdenesLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btnTomaMuestras, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(btnResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnValidarResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(btnFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDetalleFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAdministrarUsuarios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9))
+        );
 
-        jMenu6.setText("Resultados");
+        jPanel2.setBackground(new java.awt.Color(0, 153, 204));
+        jPanel2.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 8, 462));
 
-        jMenuItem9.setText("Ingresar Resultado");
-        jMenu6.add(jMenuItem9);
+        jLabel5.setFont(new java.awt.Font("Arial Black", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("SISTEMA DE GESTION CLINICO - BIOSALUD");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 510, -1));
 
-        jMenuItem11.setText("Consultar Resultados");
-        jMenu6.add(jMenuItem11);
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("© 2025 Sistema BIOSALUD. Todos los derechos reservados. ");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 790, -1, -1));
 
-        jMenuBar1.add(jMenu6);
+        btnAcerca.setText("Acerca de..");
+        btnAcerca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcercaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnAcerca, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 780, -1, -1));
 
-        jMenu7.setText("Facturacion");
-        jMenuBar1.add(jMenu7);
+        panelContenido.setLayout(new java.awt.CardLayout());
+        jPanel2.add(panelContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 680, 680));
 
-        jMenu8.setText("Reportes");
-        jMenuBar1.add(jMenu8);
-
-        jMenu9.setText("Ayuda");
-
-        jMenuItem10.setText("Acerca de..");
-        jMenu9.add(jMenuItem10);
-
-        jMenuItem12.setText("Manual de Usuario");
-        jMenu9.add(jMenuItem12);
-
-        jMenuBar1.add(jMenu9);
-
-        setJMenuBar(jMenuBar1);
+        btnAyuda.setText("Ayuda");
+        btnAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAyudaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnAyuda, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 780, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 613, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 108, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnValidarResultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarResultadosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnValidarResultadosActionPerformed
+
+    private void btnPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPacientesActionPerformed
+
+    private void btnMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMedicosActionPerformed
+        FormMedicoCRUD p = new FormMedicoCRUD();
+
+        panelContenido.removeAll();
+        panelContenido.add(p, BorderLayout.CENTER);
+        panelContenido.revalidate();
+        panelContenido.repaint();
+    }//GEN-LAST:event_btnMedicosActionPerformed
+
+    private void btnTomaMuestrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomaMuestrasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTomaMuestrasActionPerformed
+
+    private void btnResultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultadosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnResultadosActionPerformed
+
+    private void btnFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturacionActionPerformed
+        FormFactura p = new FormFactura();
+
+        panelContenido.removeAll();
+        panelContenido.add(p, BorderLayout.CENTER);
+        panelContenido.revalidate();
+        panelContenido.repaint();
+    }//GEN-LAST:event_btnFacturacionActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        FormReportes p = new FormReportes();
+
+        panelContenido.removeAll();
+        panelContenido.add(p, BorderLayout.CENTER);
+        panelContenido.revalidate();
+        panelContenido.repaint();
+    }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void btnAcercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcercaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAcercaActionPerformed
+
+    private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAyudaActionPerformed
+
+    private void btnAdministrarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarUsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAdministrarUsuariosActionPerformed
+
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        // Confirmación opcional
+        int respuesta = javax.swing.JOptionPane.showConfirmDialog(
+                this,
+                "¿Seguro que deseas cerrar sesión?",
+                "Confirmación",
+                javax.swing.JOptionPane.YES_NO_OPTION
+        );
+
+        if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
+            this.dispose(); // Cierra el MainForm
+
+            // Volver a mostrar LoginForm
+            LoginForm login = new LoginForm();
+            login.setLocationRelativeTo(null);
+            login.setVisible(true);
+        }
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnOrdenesLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenesLaboratorioActionPerformed
+        FormOrdenLaboratorio p = new FormOrdenLaboratorio();
+
+        panelContenido.removeAll();
+        panelContenido.add(p, BorderLayout.CENTER);
+        panelContenido.revalidate();
+        panelContenido.repaint();
+    }//GEN-LAST:event_btnOrdenesLaboratorioActionPerformed
+
+    private void btnDetalleFacturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleFacturasActionPerformed
+        FormDetalleFactura p = new FormDetalleFactura();
+
+        panelContenido.removeAll();
+        panelContenido.add(p, BorderLayout.CENTER);
+        panelContenido.revalidate();
+        panelContenido.repaint();
+    }//GEN-LAST:event_btnDetalleFacturasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,28 +428,31 @@ public class MainForm extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenu jMenu9;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JButton btnAcerca;
+    private javax.swing.JButton btnAdministrarUsuarios;
+    private javax.swing.JButton btnAyuda;
+    private javax.swing.JButton btnCerrarSesion;
+    private javax.swing.JButton btnDetalleFacturas;
+    private javax.swing.JButton btnFacturacion;
+    private javax.swing.JButton btnMedicos;
+    private javax.swing.JButton btnOrdenesLaboratorio;
+    private javax.swing.JButton btnPacientes;
+    private javax.swing.JButton btnReportes;
+    private javax.swing.JButton btnResultados;
+    private javax.swing.JButton btnTomaMuestras;
+    private javax.swing.JButton btnValidarResultados;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel panelContenido;
     // End of variables declaration//GEN-END:variables
 }

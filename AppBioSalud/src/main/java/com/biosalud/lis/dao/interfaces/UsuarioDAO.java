@@ -4,10 +4,13 @@
  */
 package com.biosalud.lis.dao.interfaces;
 
+import com.biosalud.lis.model.Usuario;
+
 /**
  *
  * @author folli
  */
 public interface UsuarioDAO {
-    
+    Usuario buscarPorUsername(String username);
+    boolean insertar(Usuario usuario);
 }

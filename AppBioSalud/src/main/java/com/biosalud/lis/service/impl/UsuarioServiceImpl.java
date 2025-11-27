@@ -4,10 +4,65 @@
  */
 package com.biosalud.lis.service.impl;
 
+import com.biosalud.lis.dao.interfaces.UsuarioDAO;
+import com.biosalud.lis.dao.impl.UsuarioDAOImpl;
+import com.biosalud.lis.model.Usuario;
+import com.biosalud.lis.service.interfaces.UsuarioService;
+import com.biosalud.lis.util.HashUtil;
+
 /**
- *
- * @author folli
+ * Implementación del servicio de Usuario.
  */
-public class UsuarioServiceImpl {
-    
+public class UsuarioServiceImpl implements UsuarioService {
+
+    private final UsuarioDAO usuarioDAO;
+
+    /**
+     * Constructor por defecto: crea un UsuarioDAOImpl internamente. Cambia esto
+     * por inyección si usas un framework.
+     */
+    public UsuarioServiceImpl() {
+        this.usuarioDAO = new UsuarioDAOImpl();
+    }
+
+    /**
+     * Constructor que recibe un DAO (útil para tests / inyección).
+     */
+    public UsuarioServiceImpl(UsuarioDAO usuarioDAO) {
+        this.usuarioDAO = usuarioDAO;
+    }
+
+    @Override
+    public Usuario buscarPorUsername(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            return null;
+        }
+        return usuarioDAO.buscarPorUsername(username);
+    }
+
+    @Override
+    public boolean validarCredenciales(String username, String passwordPlain) {
+
+        Usuario u = usuarioDAO.buscarPorUsername(username);
+
+        if (u == null) {
+            return false;
+        }
+
+        // Convertir la contraseña ingresada a SHA-256
+        String hashIngresado = HashUtil.sha256(passwordPlain);
+
+        // Comparar con el hash almacenado en la BD
+        return hashIngresado.equals(u.getPasswordHash());
+    }
+
+    @Override
+    public boolean registrarUsuario(Usuario usuario, String passwordPlain) {
+        // Generar hash
+        String hash = HashUtil.sha256(passwordPlain);
+        usuario.setPasswordHash(hash);
+
+        return usuarioDAO.insertar(usuario);
+    }
+
 }

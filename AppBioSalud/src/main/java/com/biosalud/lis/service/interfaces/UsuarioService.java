@@ -4,10 +4,18 @@
  */
 package com.biosalud.lis.service.interfaces;
 
+import com.biosalud.lis.model.Usuario;
+
 /**
- *
- * @author folli
+ * Servicio para operaciones sobre Usuario
  */
 public interface UsuarioService {
-    
+    Usuario buscarPorUsername(String username);
+    /**
+     * Valida las credenciales planas (password en texto) contra la contraseña guardada (hash)
+     * @return true si coincide
+     */
+    boolean validarCredenciales(String username, String passwordPlain);
+    boolean registrarUsuario(Usuario usuario, String passwordPlain);
 }
+

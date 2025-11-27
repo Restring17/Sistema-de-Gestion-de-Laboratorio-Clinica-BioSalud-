@@ -1,13 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.biosalud.lis.controller;
 
-/**
- *
- * @author folli
- */
+import com.biosalud.lis.dto.OrdenLaboratorioDTO;
+import com.biosalud.lis.model.OrdenLaboratorio;
+import com.biosalud.lis.service.impl.OrdenLaboratorioServiceImpl;
+import java.util.List;
+
+
 public class OrdenLaboratorioController {
     
+    
+    private final OrdenLaboratorioServiceImpl service = new OrdenLaboratorioServiceImpl();
+
 }
