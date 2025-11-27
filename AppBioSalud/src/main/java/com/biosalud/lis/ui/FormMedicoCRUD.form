@@ -219,7 +219,7 @@
                       <Component id="jScrollPane13" min="-2" pref="155" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                       <Component id="btnRegistrarOrden" min="-2" pref="209" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -280,11 +280,11 @@
               <EmptySpace max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="33" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnBuscarOrden" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                  <Component id="btnRegistrarOrden" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnBuscarOrden" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component id="btnRegistrarOrden" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
