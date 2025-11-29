@@ -49,6 +49,11 @@ public class FormReportes extends javax.swing.JPanel {
         lblTipoReporte.setText("Tipo de Reporte:");
 
         cbcTipoReporte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cantidad de exámenes realizados", "Tiempo promedio", "Exámenes más solicitados", " " }));
+        cbcTipoReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbcTipoReporteActionPerformed(evt);
+            }
+        });
 
         lblFechaInicio.setText("Fecha de Inicio:");
 
@@ -63,6 +68,11 @@ public class FormReportes extends javax.swing.JPanel {
         lblTipoExamen.setText("Tipo de examen:");
 
         cbcTipoExamen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Hematología", "Bioquímica", "Microbiologia" }));
+        cbcTipoExamen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbcTipoExamenActionPerformed(evt);
+            }
+        });
 
         btnGenerar.setText("Generar");
 
@@ -198,6 +208,14 @@ public class FormReportes extends javax.swing.JPanel {
     private void txtFechaFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaFinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaFinActionPerformed
+
+    private void cbcTipoReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbcTipoReporteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbcTipoReporteActionPerformed
+
+    private void cbcTipoExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbcTipoExamenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbcTipoExamenActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
