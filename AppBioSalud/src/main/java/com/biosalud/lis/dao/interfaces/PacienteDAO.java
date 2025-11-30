@@ -4,10 +4,20 @@
  */
 package com.biosalud.lis.dao.interfaces;
 
+import com.biosalud.lis.model.Paciente;
+import java.util.List;
+
 /**
  *
  * @author folli
  */
 public interface PacienteDAO {
-    
+    boolean insertar(Paciente paciente);
+    boolean actualizar(Paciente paciente);
+    boolean eliminar(Integer idPaciente);
+    Paciente buscarPorId(Integer idPaciente);
+    Paciente buscarPorDni(String dni);
+    List<Paciente> buscarPorApellidos(String apellidos);
+    List<Paciente> listarTodos();
+    int contarPacientes();
 }

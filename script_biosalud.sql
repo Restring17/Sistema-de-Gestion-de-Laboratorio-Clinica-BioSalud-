@@ -1,0 +1,228 @@
+-- ===============================================
+-- SCRIPT PARA LA BASE DE DATOS DE APPBIOSALUD
+-- ===============================================
+
+CREATE DATABASE IF NOT EXISTS appbiosalud;
+USE appbiosalud;
+
+-- ========================
+-- TABLA PACIENTE
+-- ========================
+CREATE TABLE paciente (
+  id_paciente INT AUTO_INCREMENT PRIMARY KEY,
+  dni VARCHAR(20) UNIQUE NOT NULL,
+  nombres VARCHAR(100) NOT NULL,
+  apellidos VARCHAR(100) NOT NULL,
+  fecha_nacimiento DATE,
+  telefono VARCHAR(50),
+  email VARCHAR(100)
+);
+
+-- ========================
+-- TABLA MEDICO
+-- ========================
+CREATE TABLE medico (
+  id_medico INT AUTO_INCREMENT PRIMARY KEY,
+  nombres VARCHAR(100),
+  apellidos VARCHAR(100),
+  especialidad VARCHAR(100),
+  cmp VARCHAR(50),
+  telefono VARCHAR(50)
+);
+
+-- ========================
+-- TABLA USUARIO
+-- ========================
+CREATE TABLE usuario (
+  id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  password_hash VARCHAR(64) NOT NULL,
+  rol VARCHAR(20)
+);
+
+-- ========================
+-- TABLA TECNICO LABORATORIO
+-- ========================
+CREATE TABLE tecnico_laboratorio (
+  id_tecnico INT AUTO_INCREMENT PRIMARY KEY,
+  nombres VARCHAR(100) NOT NULL,
+  apellidos VARCHAR(100) NOT NULL,
+  especialidad VARCHAR(100),
+  telefono VARCHAR(50)
+);
+
+-- ========================
+-- TABLA ORDEN DE LABORATORIO
+-- ========================
+CREATE TABLE orden_laboratorio (
+  id_orden INT AUTO_INCREMENT PRIMARY KEY,
+  fecha_orden DATETIME,
+  tipo_examen VARCHAR(255),
+  observaciones TEXT,
+  id_paciente INT,
+  id_medico INT,
+  estado VARCHAR(50) DEFAULT 'PENDIENTE',
+  FOREIGN KEY (id_paciente) REFERENCES paciente(id_paciente),
+  FOREIGN KEY (id_medico) REFERENCES medico(id_medico)
+);
+
+-- ========================
+-- TABLA TOMA DE MUESTRA
+-- ========================
+CREATE TABLE toma_muestra (
+  id_muestra INT AUTO_INCREMENT PRIMARY KEY,
+  fecha_hora DATETIME,
+  tipo_muestra VARCHAR(50),
+  id_orden INT,
+  id_tecnico INT,
+  FOREIGN KEY (id_orden) REFERENCES orden_laboratorio(id_orden),
+  FOREIGN KEY (id_tecnico) REFERENCES tecnico_laboratorio(id_tecnico)
+);
+
+-- ========================
+-- TABLA RESULTADO DE LABORATORIO
+-- ========================
+CREATE TABLE resultado_laboratorio (
+  id_resultado INT AUTO_INCREMENT PRIMARY KEY,
+  fecha_resultado DATETIME,
+  descripcion TEXT,
+  valores_json TEXT,
+  conclusiones TEXT,
+  id_orden INT,
+  validado BOOLEAN DEFAULT FALSE,
+  FOREIGN KEY (id_orden) REFERENCES orden_laboratorio(id_orden)
+);
+
+-- ========================
+-- TABLA FACTURA
+-- ========================
+CREATE TABLE factura (
+  id_factura INT AUTO_INCREMENT PRIMARY KEY,
+  fecha_emision DATETIME,
+  monto_total DECIMAL(10,2),
+  metodo_pago VARCHAR(50),
+  id_paciente INT,
+  FOREIGN KEY (id_paciente) REFERENCES paciente(id_paciente)
+);
+
+-- ========================
+-- TABLA DETALLE FACTURA
+-- ========================
+CREATE TABLE detalle_factura (
+  id_detalle INT AUTO_INCREMENT PRIMARY KEY,
+  id_factura INT,
+  descripcion_servicio VARCHAR(255),
+  cantidad INT,
+  precio_unitario DECIMAL(10,2),
+  FOREIGN KEY (id_factura) REFERENCES factura(id_factura)
+);
+
+-- ========================
+-- USUARIO DE PRUEBA
+-- ========================
+INSERT INTO usuario (username, password_hash, rol)
+VALUES (
+    'admin',
+    SHA2('admin123', 256),
+    'ADMIN'
+);
+
+-- ===============================================
+-- PROCEDIMIENTOS ALMACENADOS PARA PACIENTES
+-- ===============================================
+
+-- Procedimiento para insertar paciente
+DELIMITER //
+CREATE PROCEDURE sp_insertar_paciente(
+    IN p_dni VARCHAR(20),
+    IN p_nombres VARCHAR(100),
+    IN p_apellidos VARCHAR(100),
+    IN p_fecha_nacimiento DATE,
+    IN p_telefono VARCHAR(50),
+    IN p_email VARCHAR(100)
+)
+BEGIN
+    INSERT INTO paciente (dni, nombres, apellidos, fecha_nacimiento, telefono, email)
+    VALUES (p_dni, p_nombres, p_apellidos, p_fecha_nacimiento, p_telefono, p_email);
+END //
+DELIMITER ;
+
+-- Procedimiento para actualizar paciente
+DELIMITER //
+CREATE PROCEDURE sp_actualizar_paciente(
+    IN p_id_paciente INT,
+    IN p_dni VARCHAR(20),
+    IN p_nombres VARCHAR(100),
+    IN p_apellidos VARCHAR(100),
+    IN p_fecha_nacimiento DATE,
+    IN p_telefono VARCHAR(50),
+    IN p_email VARCHAR(100)
+)
+BEGIN
+    UPDATE paciente 
+    SET dni = p_dni,
+        nombres = p_nombres,
+        apellidos = p_apellidos,
+        fecha_nacimiento = p_fecha_nacimiento,
+        telefono = p_telefono,
+        email = p_email
+    WHERE id_paciente = p_id_paciente;
+END //
+DELIMITER ;
+
+-- Procedimiento para eliminar paciente
+DELIMITER //
+CREATE PROCEDURE sp_eliminar_paciente(
+    IN p_id_paciente INT
+)
+BEGIN
+    DELETE FROM paciente WHERE id_paciente = p_id_paciente;
+END //
+DELIMITER ;
+
+-- Procedimiento para buscar paciente por ID
+DELIMITER //
+CREATE PROCEDURE sp_buscar_paciente_por_id(
+    IN p_id_paciente INT
+)
+BEGIN
+    SELECT * FROM paciente WHERE id_paciente = p_id_paciente;
+END //
+DELIMITER ;
+
+-- Procedimiento para buscar paciente por DNI
+DELIMITER //
+CREATE PROCEDURE sp_buscar_paciente_por_dni(
+    IN p_dni VARCHAR(20)
+)
+BEGIN
+    SELECT * FROM paciente WHERE dni = p_dni;
+END //
+DELIMITER ;
+
+-- Procedimiento para buscar pacientes por apellidos (búsqueda parcial)
+DELIMITER //
+CREATE PROCEDURE sp_buscar_paciente_por_apellidos(
+    IN p_apellidos VARCHAR(100)
+)
+BEGIN
+    SELECT * FROM paciente WHERE apellidos LIKE p_apellidos;
+END //
+DELIMITER ;
+
+-- Procedimiento para listar todos los pacientes
+DELIMITER //
+CREATE PROCEDURE sp_listar_pacientes()
+BEGIN
+    SELECT * FROM paciente ORDER BY apellidos, nombres;
+END //
+DELIMITER ;
+
+-- Procedimiento para contar pacientes
+DELIMITER //
+CREATE PROCEDURE sp_contar_pacientes()
+BEGIN
+    SELECT COUNT(*) as total FROM paciente;
+END //
+DELIMITER ;
+
