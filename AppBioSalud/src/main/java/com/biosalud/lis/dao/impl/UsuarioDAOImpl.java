@@ -56,16 +56,15 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public boolean actualizar(Usuario usuario) {
-        String sql = "{CALL sp_update_usuario(?,?,?,?,?,?)}";
+        String sql = "{CALL sp_update_usuario_by_username(?,?,?,?,?)}";
 
         try (Connection conn = DBConnection.getInstance().getConnection(); CallableStatement cs = conn.prepareCall(sql)) {
 
-            cs.setInt(1, usuario.getIdUsuario());
-            cs.setString(2, usuario.getUsername());
-            cs.setString(3, usuario.getRol());
-            cs.setString(4, usuario.getNombre());
-            cs.setString(5, usuario.getEmail());
-            cs.setString(6, usuario.getEstado());
+            cs.setString(1, usuario.getUsername());
+            cs.setString(2, usuario.getRol());
+            cs.setString(3, usuario.getNombre());
+            cs.setString(4, usuario.getEmail());
+            cs.setString(5, usuario.getEstado());
 
             return cs.executeUpdate() > 0;
 
@@ -118,5 +117,21 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         u.setEmail(rs.getString("email"));
         u.setEstado(rs.getString("estado"));
         return u;
+    }
+
+    @Override
+    public boolean actualizarPasswordPorUsername(String username, String passwordHash) {
+        String sql = "{CALL sp_update_password_by_username(?,?)}";
+
+        try (Connection conn = DBConnection.getInstance().getConnection(); CallableStatement cs = conn.prepareCall(sql)) {
+
+            cs.setString(1, username);
+            cs.setString(2, passwordHash);
+            return cs.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

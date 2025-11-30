@@ -19,7 +19,10 @@ public interface UsuarioDAO {
 
     boolean actualizar(Usuario usuario);
     
+    boolean actualizarPasswordPorUsername(String username, String passwordHash);
+    
     List<Usuario> listar();
     
     boolean eliminarPorUsuario(String usuario);
+    
 }
