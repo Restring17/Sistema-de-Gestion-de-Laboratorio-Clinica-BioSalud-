@@ -4,10 +4,15 @@
  */
 package com.biosalud.lis.patterns.factory;
 
+import com.biosalud.lis.patterns.command.GenerarReporteCommand;
+
 /**
  *
  * @author folli
  */
 public class ReporteFactory {
-    
+    public static GenerarReporteCommand createGenerarReporteCommand() {
+        return new GenerarReporteCommand();
+    }
 }
+

@@ -4,10 +4,16 @@
  */
 package com.biosalud.lis.service.interfaces;
 
-/**
- *
- * @author folli
- */
+import com.biosalud.lis.model.Reporte;
+import java.time.LocalDate;
+import java.util.List;
+
+
 public interface ReportService {
-    
+
+    List<Reporte> generarReporte(String tipoExamen, LocalDate inicio, LocalDate fin);
+
+    List<String> obtenerTiposExamen();   // ← AGREGADO
 }
+
+
