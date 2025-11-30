@@ -308,3 +308,49 @@ BEGIN
     VALUES (p_nombres, p_apellidos, p_especialidad, p_cmp, p_telefono);
 END //
 DELIMITER ;
+
+//Tipos de Examenes 
+CREATE PROCEDURE sp_tipos_examen()
+BEGIN
+  SELECT DISTINCT tipo_examen FROM orden_laboratorio 
+  WHERE tipo_examen IS NOT NULL AND tipo_examen <> ''
+  ORDER BY tipo_examen;
+END //
+DELIMITER ;
+
+
+-- [2] PROCEDIMIENTO DE REPORTE DE EXÁMENES 
+//llenar las tablas y operaciones
+
+DELIMITER //
+CREATE PROCEDURE sp_reporte_examenes (
+  IN p_tipoExamen VARCHAR(255),
+  IN p_fechaInicio DATE,
+  IN p_fechaFin DATE
+)
+BEGIN
+  -- Definir el patrón de búsqueda para el tipo de examen
+  SET @tipoPattern = IF(p_tipoExamen IS NULL OR p_tipoExamen = '', '%', p_tipoExamen);
+
+  -- Tabla 1: Detalle de órdenes (para TablaReportes en Java)
+  SELECT 
+    o.id_orden, 
+    o.tipo_examen, 
+    DATE(o.fecha_orden) AS fecha_orden, -- Formateamos la fecha a solo DATE
+    DATEDIFF(r.fecha_resultado, o.fecha_orden) AS tiempo_entrega
+  FROM orden_laboratorio o
+  LEFT JOIN resultado_laboratorio r ON o.id_orden = r.id_orden
+  WHERE o.tipo_examen LIKE @tipoPattern -- Usa el patrón de búsqueda
+    AND DATE(o.fecha_orden) BETWEEN p_fechaInicio AND p_fechaFin -- Filtro de fecha corregido
+  ORDER BY o.fecha_orden;
+
+  -- Tabla 2: Resumen (Totales y Promedio) (para TablaReportes1 en Java)
+  SELECT 
+    COUNT(o.id_orden) AS total_examenes, -- Contamos las órdenes
+    COALESCE(AVG(DATEDIFF(r.fecha_resultado, o.fecha_orden)), 0.0) AS tiempo_promedio -- COALESCE para evitar NULL
+  FROM orden_laboratorio o
+  LEFT JOIN resultado_laboratorio r ON o.id_orden = r.id_orden
+  WHERE o.tipo_examen LIKE @tipoPattern
+    AND DATE(o.fecha_orden) BETWEEN p_fechaInicio AND p_fechaFin;
+END //
+DELIMITER ;
