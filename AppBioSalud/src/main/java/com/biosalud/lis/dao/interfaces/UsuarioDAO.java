@@ -5,12 +5,21 @@
 package com.biosalud.lis.dao.interfaces;
 
 import com.biosalud.lis.model.Usuario;
+import java.util.List;
 
 /**
  *
  * @author folli
  */
 public interface UsuarioDAO {
+
     Usuario buscarPorUsername(String username);
+
     boolean insertar(Usuario usuario);
+
+    boolean actualizar(Usuario usuario);
+    
+    List<Usuario> listar();
+    
+    boolean eliminarPorUsuario(String usuario);
 }

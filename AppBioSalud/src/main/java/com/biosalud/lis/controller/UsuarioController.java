@@ -4,10 +4,33 @@
  */
 package com.biosalud.lis.controller;
 
-/**
- *
- * @author folli
- */
+import com.biosalud.lis.model.Usuario;
+import com.biosalud.lis.service.impl.UsuarioServiceImpl;
+import com.biosalud.lis.service.interfaces.UsuarioService;
+
+import java.util.List;
+
 public class UsuarioController {
-    
+
+    private final UsuarioService usuarioService = new UsuarioServiceImpl();
+
+    public boolean registrar(Usuario u, String passwordPlain) {
+        return usuarioService.registrarUsuario(u, passwordPlain);
+    }
+
+    public boolean actualizar(Usuario u) {
+        return usuarioService.actualizarUsuario(u);
+    }
+
+    public List<Usuario> listar() {
+        return usuarioService.listar();
+    }
+
+    public Usuario buscar(String username) {
+        return usuarioService.buscarPorUsername(username);
+    }
+
+    public boolean eliminarPorUsuario(String usuario) {
+        return usuarioService.eliminarPorUsuario(usuario);
+    }
 }

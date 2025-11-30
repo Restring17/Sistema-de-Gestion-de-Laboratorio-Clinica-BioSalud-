@@ -9,6 +9,9 @@ public class Usuario {
     private String username;
     private String password_hash;
     private String rol;
+    private String nombre;
+    private String email;
+    private String estado;
 
     public int getIdUsuario() {
         return id_usuario;
@@ -41,5 +44,30 @@ public class Usuario {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
 }
 

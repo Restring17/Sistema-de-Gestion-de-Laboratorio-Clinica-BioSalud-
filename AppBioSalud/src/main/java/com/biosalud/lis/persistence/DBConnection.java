@@ -15,7 +15,7 @@ public class DBConnection {
     private DBConnection() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/appbiosalud?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
         String user = "root";
-        String pass = ""; // XAMPP por defecto no tiene contraseña. Si tienes una, cámbiala aquí
+        String pass = "admin123"; // XAMPP por defecto no tiene contraseña. Si tienes una, cámbiala aquí
         
         try {
             // Cargar el driver de MySQL

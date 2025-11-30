@@ -373,7 +373,8 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAyudaActionPerformed
 
     private void btnAdministrarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarUsuariosActionPerformed
-        // TODO add your handling code here:
+        FormAdminUsuarios p = new FormAdminUsuarios();
+        p.setVisible(true);
     }//GEN-LAST:event_btnAdministrarUsuariosActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed

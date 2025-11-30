@@ -9,6 +9,7 @@ import com.biosalud.lis.dao.impl.UsuarioDAOImpl;
 import com.biosalud.lis.model.Usuario;
 import com.biosalud.lis.service.interfaces.UsuarioService;
 import com.biosalud.lis.util.HashUtil;
+import java.util.List;
 
 /**
  * Implementación del servicio de Usuario.
@@ -64,5 +65,22 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return usuarioDAO.insertar(usuario);
     }
+
+    @Override
+    public boolean actualizarUsuario(Usuario usuario) {
+        return usuarioDAO.actualizar(usuario);
+    }
+
+    @Override
+    public boolean eliminarPorUsuario(String usuario) {
+        return usuarioDAO.eliminarPorUsuario(usuario);
+    }
+    @Override
+    public List<Usuario> listar() {
+            return usuarioDAO.listar();
+    }
+
+    
+    
 
 }
