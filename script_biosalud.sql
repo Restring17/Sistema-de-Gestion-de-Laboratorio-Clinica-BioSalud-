@@ -226,3 +226,85 @@ BEGIN
 END //
 DELIMITER ;
 
+--Procedimiento para listar medicos
+DELIMITER //
+CREATE PROCEDURE sp_medico_listar()
+BEGIN
+    SELECT * FROM medico;
+END //
+DELIMITER ;
+
+--Procedimiento para actualizar medicos
+DELIMITER //
+CREATE PROCEDURE sp_medico_actualizar(
+    IN p_id INT,
+    IN p_nombres VARCHAR(100),
+    IN p_apellidos VARCHAR(100),
+    IN p_especialidad VARCHAR(100),
+    IN p_cmp VARCHAR(50),
+    IN p_telefono VARCHAR(50)
+)
+BEGIN
+    UPDATE medico
+    SET nombres = p_nombres,
+        apellidos = p_apellidos,
+        especialidad = p_especialidad,
+        cmp = p_cmp,
+        telefono = p_telefono
+    WHERE id_medico = p_id;
+END //
+DELIMITER ;
+
+--Procedimiento para contar medicos
+DELIMITER //
+CREATE PROCEDURE sp_medico_contar(OUT total INT)
+BEGIN
+    SELECT COUNT(*) INTO total FROM medico;
+END //
+DELIMITER ;
+
+--Procedimiento para eliminar medicos
+DELIMITER //
+CREATE PROCEDURE sp_medico_eliminar(IN p_id INT)
+BEGIN
+    DELETE FROM medico WHERE id_medico = p_id;
+END //
+DELIMITER ;
+
+--Procedimiento para buscar medicos
+DELIMITER //
+CREATE PROCEDURE sp_medico_obtenerPorID(IN p_id INT)
+BEGIN
+    SELECT * FROM medico WHERE id_medico = p_id;
+END //
+DELIMITER ;
+
+--Procedimiento para registrar medico
+DELIMITER //
+CREATE PROCEDURE sp_medico_crear(
+    IN p_nombres VARCHAR(100),
+    IN p_apellidos VARCHAR(100),
+    IN p_especialidad VARCHAR(100),
+    IN p_cmp VARCHAR(50),
+    IN p_telefono VARCHAR(50)
+)
+BEGIN
+    INSERT INTO medico (nombres, apellidos, especialidad, cmp, telefono)
+    VALUES (p_nombres, p_apellidos, p_especialidad, p_cmp, p_telefono);
+END //
+DELIMITER ;
+
+--procedimiento para insertar medico
+DELIMITER //
+CREATE PROCEDURE sp_medico_insertar(
+    IN p_nombres VARCHAR(100),
+    IN p_apellidos VARCHAR(100),
+    IN p_especialidad VARCHAR(100),
+    IN p_cmp VARCHAR(50),
+    IN p_telefono VARCHAR(50)
+)
+BEGIN
+    INSERT INTO medico (nombres, apellidos, especialidad, cmp, telefono)
+    VALUES (p_nombres, p_apellidos, p_especialidad, p_cmp, p_telefono);
+END //
+DELIMITER ;
