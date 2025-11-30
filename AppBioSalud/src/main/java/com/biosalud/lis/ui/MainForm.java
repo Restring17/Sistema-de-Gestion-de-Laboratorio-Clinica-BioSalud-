@@ -306,7 +306,12 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnValidarResultadosActionPerformed
 
     private void btnPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientesActionPerformed
-        // TODO add your handling code here:
+        FormPacienteCRUD p = new FormPacienteCRUD();
+
+        panelContenido.removeAll();
+        panelContenido.add(p, BorderLayout.CENTER);
+        panelContenido.revalidate();
+        panelContenido.repaint();
     }//GEN-LAST:event_btnPacientesActionPerformed
 
     private void btnMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMedicosActionPerformed
