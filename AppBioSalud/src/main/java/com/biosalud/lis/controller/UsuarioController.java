@@ -33,4 +33,8 @@ public class UsuarioController {
     public boolean eliminarPorUsuario(String usuario) {
         return usuarioService.eliminarPorUsuario(usuario);
     }
+
+    public boolean cambiarPassword(String username, String newPasswordPlain) {
+        return usuarioService.cambiarPassword(username, newPasswordPlain);
+    }
 }

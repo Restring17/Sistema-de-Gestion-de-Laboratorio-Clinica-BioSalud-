@@ -27,6 +27,8 @@ public interface UsuarioService {
     boolean actualizarUsuario(Usuario usuario);
 
     boolean eliminarPorUsuario(String usuario);
+    
+    boolean cambiarPassword(String username, String newPasswordPlain);
 
     List<Usuario> listar();
 }

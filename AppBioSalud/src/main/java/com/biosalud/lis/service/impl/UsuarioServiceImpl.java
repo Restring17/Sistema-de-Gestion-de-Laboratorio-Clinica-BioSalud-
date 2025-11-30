@@ -75,12 +75,18 @@ public class UsuarioServiceImpl implements UsuarioService {
     public boolean eliminarPorUsuario(String usuario) {
         return usuarioDAO.eliminarPorUsuario(usuario);
     }
+
     @Override
     public List<Usuario> listar() {
-            return usuarioDAO.listar();
+        return usuarioDAO.listar();
     }
 
-    
-    
-
+    @Override
+    public boolean cambiarPassword(String username, String newPasswordPlain) {
+        if (username == null || username.trim().isEmpty() || newPasswordPlain == null || newPasswordPlain.isBlank()) {
+            return false;
+        }
+        String hash = HashUtil.sha256(newPasswordPlain);
+        return usuarioDAO.actualizarPasswordPorUsername(username, hash);
+    }
 }
