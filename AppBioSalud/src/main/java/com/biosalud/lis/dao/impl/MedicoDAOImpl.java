@@ -1,5 +1,5 @@
 package com.biosalud.lis.dao.impl;
-
+import com.biosalud.lis.persistence.DBConnection;
 import com.biosalud.lis.dao.interfaces.MedicoDAO;
 import com.biosalud.lis.model.Medico;
 import java.sql.*;
@@ -8,27 +8,22 @@ import java.util.List;
 
 public class MedicoDAOImpl implements MedicoDAO {
 
-    private Connection conexion;
-
-    public MedicoDAOImpl() {
-        try {
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/appbiosalud", "root", ""); //tu contraseña
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private Connection getConnection() throws SQLException {
+        return DBConnection.getInstance().getConnection();
     }
 
     @Override
     public boolean insertar(Medico medico) {
         String sql = "{CALL sp_medico_insertar(?,?,?,?,?)}";
-        try (CallableStatement cs = conexion.prepareCall(sql)) {
+        try (Connection conn = getConnection();
+             CallableStatement cs = conn.prepareCall(sql)) {
             cs.setString(1, medico.getNombres());
             cs.setString(2, medico.getApellidos());
             cs.setString(3, medico.getEspecialidad());
             cs.setString(4, medico.getCmp());
             cs.setString(5, medico.getTelefono());
 
-            int resultado = cs.executeUpdate(); // ✅ usar executeUpdate
+            int resultado = cs.executeUpdate(); 
             return resultado > 0;
         } catch (SQLException e) {
             System.err.println("Error al insertar médico: " + e.getMessage());
@@ -36,9 +31,11 @@ public class MedicoDAOImpl implements MedicoDAO {
         }
     }
 
-    @Override
+   @Override
     public boolean actualizar(Medico medico) {
-        try (CallableStatement cs = conexion.prepareCall("{CALL sp_medico_actualizar(?,?,?,?,?,?)}")) {
+        String sql = "{CALL sp_medico_actualizar(?,?,?,?,?,?)}";
+        try (Connection conn = getConnection();
+             CallableStatement cs = conn.prepareCall(sql)) {
             cs.setInt(1, medico.getIdMedico());
             cs.setString(2, medico.getNombres());
             cs.setString(3, medico.getApellidos());
@@ -54,7 +51,9 @@ public class MedicoDAOImpl implements MedicoDAO {
 
     @Override
     public boolean eliminar(int idMedico) {
-        try (CallableStatement cs = conexion.prepareCall("{CALL sp_medico_eliminar(?)}")) {
+        String sql = "{CALL sp_medico_eliminar(?)}";
+        try (Connection conn = getConnection();
+             CallableStatement cs = conn.prepareCall(sql)) {
             cs.setInt(1, idMedico);
             return cs.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -65,7 +64,9 @@ public class MedicoDAOImpl implements MedicoDAO {
 
     @Override
     public Medico buscarPorId(int idMedico) {
-        try (CallableStatement cs = conexion.prepareCall("{CALL sp_medico_obtenerPorID(?)}")) {
+        String sql = "{CALL sp_medico_obtenerPorID(?)}";
+        try (Connection conn = getConnection();
+             CallableStatement cs = conn.prepareCall(sql)) {
             cs.setInt(1, idMedico);
             ResultSet rs = cs.executeQuery();
             if (rs.next()) {
@@ -87,7 +88,9 @@ public class MedicoDAOImpl implements MedicoDAO {
     @Override
     public List<Medico> listarTodos() {
         List<Medico> lista = new ArrayList<>();
-        try (CallableStatement cs = conexion.prepareCall("{CALL sp_medico_listar()}")) {
+        String sql = "{CALL sp_medico_listar()}";
+        try (Connection conn = getConnection();
+             CallableStatement cs = conn.prepareCall(sql)) {
             ResultSet rs = cs.executeQuery();
             while (rs.next()) {
                 Medico medico = new Medico(
@@ -108,7 +111,9 @@ public class MedicoDAOImpl implements MedicoDAO {
 
     @Override
     public int contarMedicos() {
-        try (CallableStatement cs = conexion.prepareCall("{CALL sp_medico_contar(?)}")) {
+        String sql = "{CALL sp_medico_contar(?)}";
+        try (Connection conn = getConnection();
+             CallableStatement cs = conn.prepareCall(sql)) {
             cs.registerOutParameter(1, Types.INTEGER);
             cs.execute();
             return cs.getInt(1);
