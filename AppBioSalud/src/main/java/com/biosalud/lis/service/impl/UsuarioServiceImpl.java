@@ -19,8 +19,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioDAO usuarioDAO;
 
     /**
-     * Constructor por defecto: crea un UsuarioDAOImpl internamente. Cambia esto
-     * por inyección si usas un framework.
+     * Constructor por defecto: crea un UsuarioDAOImpl internamente
      */
     public UsuarioServiceImpl() {
         this.usuarioDAO = new UsuarioDAOImpl();

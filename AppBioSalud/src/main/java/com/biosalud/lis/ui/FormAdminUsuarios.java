@@ -6,10 +6,8 @@ package com.biosalud.lis.ui;
 
 import com.biosalud.lis.controller.UsuarioController;
 import com.biosalud.lis.model.Usuario;
-import com.biosalud.lis.util.HashUtil;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
 
 /**
  *
@@ -119,7 +117,12 @@ public class FormAdminUsuarios extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Email:");
 
-        cmbBoxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Recepcionista", "Tecnico", "Asistente", "Medico", "Bioquimico" }));
+        cmbBoxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN", "RECEPCIONISTA", "TECNICO", "ASISTENTE", "MEDICO", "BIOQUIMICO" }));
+        cmbBoxRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBoxRolActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -414,6 +417,10 @@ public class FormAdminUsuarios extends javax.swing.JFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void cmbBoxRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxRolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbBoxRolActionPerformed
 
     /**
      * @param args the command line arguments

@@ -262,15 +262,19 @@
             <Component class="javax.swing.JComboBox" name="cmbBoxRol">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
-                    <StringItem index="0" value="Recepcionista"/>
-                    <StringItem index="1" value="Tecnico"/>
-                    <StringItem index="2" value="Asistente"/>
-                    <StringItem index="3" value="Medico"/>
-                    <StringItem index="4" value="Bioquimico"/>
+                  <StringArray count="6">
+                    <StringItem index="0" value="ADMIN"/>
+                    <StringItem index="1" value="RECEPCIONISTA"/>
+                    <StringItem index="2" value="TECNICO"/>
+                    <StringItem index="3" value="ASISTENTE"/>
+                    <StringItem index="4" value="MEDICO"/>
+                    <StringItem index="5" value="BIOQUIMICO"/>
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbBoxRolActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>

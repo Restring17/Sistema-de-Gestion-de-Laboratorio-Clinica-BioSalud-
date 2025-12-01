@@ -5,7 +5,10 @@
 package com.biosalud.lis.ui;
 
 import com.biosalud.lis.model.Usuario;
+import com.biosalud.lis.patterns.factory.PermisosFactory;
+import com.biosalud.lis.patterns.strategy.IPermisosStrategy;
 import java.awt.BorderLayout;
+import javax.swing.JButton;
 
 /**
  *
@@ -22,14 +25,25 @@ public class MainForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    private Usuario usuario;
 
     public MainForm(Usuario usuario) {
+        this.usuario = usuario;
         initComponents();
         setTitle("BIOSALUD - Módulos del Sistema");
         pack();
         setLocationRelativeTo(null);
 
         panelContenido.setLayout(new BorderLayout());
+        aplicarPermisosUsuario();
+    }
+
+    private void aplicarPermisosUsuario() {
+        IPermisosStrategy permisos = PermisosFactory.getStrategy(usuario.getRol());
+        permisos.aplicarPermisos(this);
+
+        // Mostrar el usuario logeado en la etiqueta @Usuario
+        jLabel3.setText(usuario.getUsername());
     }
 
     /**
@@ -414,14 +428,54 @@ public class MainForm extends javax.swing.JFrame {
         panelContenido.repaint();
     }//GEN-LAST:event_btnDetalleFacturasActionPerformed
 
+    public JButton getBtnAdministrarUsuarios() {
+        return btnAdministrarUsuarios;
+    }
+
+    public JButton getBtnDetalleFacturas() {
+        return btnDetalleFacturas;
+    }
+
+    public JButton getBtnFacturacion() {
+        return btnFacturacion;
+    }
+
+    public JButton getBtnMedicos() {
+        return btnMedicos;
+    }
+
+    public JButton getBtnOrdenesLaboratorio() {
+        return btnOrdenesLaboratorio;
+    }
+
+    public JButton getBtnPacientes() {
+        return btnPacientes;
+    }
+
+    public JButton getBtnReportes() {
+        return btnReportes;
+    }
+
+    public JButton getBtnResultados() {
+        return btnResultados;
+    }
+
+    public JButton getBtnTomaMuestras() {
+        return btnTomaMuestras;
+    }
+
     /**
      * @param args the command line arguments
      */
+    public JButton getBtnValidarResultados() {
+        return btnValidarResultados;
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
