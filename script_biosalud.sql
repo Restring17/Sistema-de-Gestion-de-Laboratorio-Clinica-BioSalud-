@@ -117,9 +117,14 @@ CREATE TABLE detalle_factura (
   FOREIGN KEY (id_factura) REFERENCES factura(id_factura)
 );
 
--- ========================
--- USUARIO DE PRUEBA
--- ========================
+CREATE TABLE rol (
+    id_rol INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) UNIQUE NOT NULL
+);
+
+-- ==============================
+-- USUARIO ADMINISTRADOR
+-- ==============================
 INSERT INTO usuario (username, password_hash, rol)
 VALUES (
     'admin',
@@ -127,6 +132,30 @@ VALUES (
     'ADMIN'
 );
 
+-- ======================================
+-- MODIFICACIONES NECESARIAS
+-- ======================================
+
+-- Modificaciones tabla usuario
+ALTER TABLE usuario 
+ADD COLUMN nombre VARCHAR(100),
+ADD COLUMN email VARCHAR(100),
+ADD COLUMN estado ENUM('ACTIVO', 'INACTIVO') DEFAULT 'ACTIVO';
+
+-- ======================================
+-- INSERTS
+-- ======================================
+
+-- Inserts para roles
+INSERT INTO rol (nombre) VALUES
+('ADMIN'),
+('RECEPCIONISTA'),
+('TECNICO'),
+('ASISTENTE'),
+('MEDICO'),
+('BIOQUIMICO');
+
+USE appbiosalud;
 -- ===============================================
 -- PROCEDIMIENTOS ALMACENADOS PARA PACIENTES
 -- ===============================================
@@ -226,7 +255,97 @@ BEGIN
 END //
 DELIMITER ;
 
---Procedimiento para listar medicos
+-- =========================================
+-- PROCEDIMIENTOS ALMACENADOS PARA USUARIOS
+-- =========================================
+USE appbiosalud;
+-- Registrar usuario
+DELIMITER $$
+
+CREATE PROCEDURE sp_insert_usuario (
+    IN p_username VARCHAR(50),
+    IN p_password_hash VARCHAR(64),
+    IN p_rol VARCHAR(20),
+    IN p_nombre VARCHAR(100),
+    IN p_email VARCHAR(100)
+)
+BEGIN
+    INSERT INTO usuario(username, password_hash, rol, nombre, email, estado)
+    VALUES (p_username, p_password_hash, p_rol, p_nombre, p_email, 'ACTIVO');
+END $$
+DELIMITER ;
+
+-- Actualizar usuario
+DROP PROCEDURE IF EXISTS sp_update_usuario_by_username;
+DELIMITER $$
+
+CREATE PROCEDURE sp_update_usuario_by_username(
+    IN p_username VARCHAR(50),
+    IN p_rol VARCHAR(20),
+    IN p_nombre VARCHAR(100),
+    IN p_email VARCHAR(100),
+    IN p_estado VARCHAR(10)
+)
+BEGIN
+    UPDATE usuario
+    SET rol = p_rol,
+        nombre = p_nombre,
+        email = p_email,
+        estado = p_estado
+    WHERE username = p_username;
+END$$
+
+DELIMITER ;
+
+-- Eliminar usuario
+DROP PROCEDURE IF EXISTS sp_eliminar_usuario;
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_eliminar_usuario
+(
+    IN p_username VARCHAR(50)
+)
+BEGIN
+    DELETE FROM usuario
+    WHERE username = p_username;
+END $$
+
+DELIMITER ;
+
+-- Procedimiento para buscar usuario por username
+DROP PROCEDURE IF EXISTS sp_buscar_usuario_por_username;
+DELIMITER $$
+
+CREATE PROCEDURE sp_buscar_usuario_por_username(
+    IN p_username VARCHAR(50)
+)
+BEGIN
+    SELECT * 
+    FROM usuario
+    WHERE username = p_username;
+END$$
+
+DELIMITER ;
+
+-- PROCEDIMIENTO: actualizar contraseña por username
+DROP PROCEDURE IF EXISTS sp_update_password_by_username;
+DELIMITER $$
+CREATE PROCEDURE sp_update_password_by_username(
+    IN p_username VARCHAR(50),
+    IN p_password_hash VARCHAR(64)
+)
+BEGIN
+    UPDATE usuario
+    SET password_hash = p_password_hash
+    WHERE username = p_username;
+END$$
+DELIMITER ;
+
+-- ==============================================
+-- PROCEDIMIENTOS ALMACENADOS PARA MEDICOS
+-- ==============================================
+-- Procedimiento para listar medicos
 DELIMITER //
 CREATE PROCEDURE sp_medico_listar()
 BEGIN
@@ -234,7 +353,7 @@ BEGIN
 END //
 DELIMITER ;
 
---Procedimiento para actualizar medicos
+-- Procedimiento para actualizar medicos
 DELIMITER //
 CREATE PROCEDURE sp_medico_actualizar(
     IN p_id INT,
@@ -255,7 +374,7 @@ BEGIN
 END //
 DELIMITER ;
 
---Procedimiento para contar medicos
+-- Procedimiento para contar medicos
 DELIMITER //
 CREATE PROCEDURE sp_medico_contar(OUT total INT)
 BEGIN
@@ -263,7 +382,7 @@ BEGIN
 END //
 DELIMITER ;
 
---Procedimiento para eliminar medicos
+-- Procedimiento para eliminar medicos
 DELIMITER //
 CREATE PROCEDURE sp_medico_eliminar(IN p_id INT)
 BEGIN
@@ -271,7 +390,7 @@ BEGIN
 END //
 DELIMITER ;
 
---Procedimiento para buscar medicos
+-- Procedimiento para buscar medicos
 DELIMITER //
 CREATE PROCEDURE sp_medico_obtenerPorID(IN p_id INT)
 BEGIN
@@ -279,7 +398,7 @@ BEGIN
 END //
 DELIMITER ;
 
---Procedimiento para registrar medico
+-- Procedimiento para registrar medico
 DELIMITER //
 CREATE PROCEDURE sp_medico_crear(
     IN p_nombres VARCHAR(100),
@@ -294,7 +413,7 @@ BEGIN
 END //
 DELIMITER ;
 
---procedimiento para insertar medico
+-- procedimiento para insertar medico
 DELIMITER //
 CREATE PROCEDURE sp_medico_insertar(
     IN p_nombres VARCHAR(100),
@@ -309,18 +428,12 @@ BEGIN
 END //
 DELIMITER ;
 
-//Tipos de Examenes 
-CREATE PROCEDURE sp_tipos_examen()
-BEGIN
-  SELECT DISTINCT tipo_examen FROM orden_laboratorio 
-  WHERE tipo_examen IS NOT NULL AND tipo_examen <> ''
-  ORDER BY tipo_examen;
-END //
-DELIMITER ;
+-- ==========================================
+-- PROCEDIMIENTOS ALMACENADOS PARA REPORTES
+-- ==========================================
+USE appbiosalud;
 
-
--- [2] PROCEDIMIENTO DE REPORTE DE EXÁMENES 
-//llenar las tablas y operaciones
+-- llenar las tablas y operaciones
 
 DELIMITER //
 CREATE PROCEDURE sp_reporte_examenes (
@@ -352,5 +465,154 @@ BEGIN
   LEFT JOIN resultado_laboratorio r ON o.id_orden = r.id_orden
   WHERE o.tipo_examen LIKE @tipoPattern
     AND DATE(o.fecha_orden) BETWEEN p_fechaInicio AND p_fechaFin;
+END //
+DELIMITER ;
+
+-- [1] PROCEDIMIENTO DE TIPOS DE EXAMEN (CORRECTO)
+DROP PROCEDURE IF EXISTS sp_tipos_examen;
+DELIMITER //
+CREATE PROCEDURE sp_tipos_examen()
+BEGIN
+  SELECT DISTINCT tipo_examen FROM orden_laboratorio 
+  WHERE tipo_examen IS NOT NULL AND tipo_examen <> ''
+  ORDER BY tipo_examen;
+END //
+DELIMITER ;
+-- ==============================================
+-- PROCEDIMIENTOS ALMACENADOS PARA TOMA MUESTRA 
+-- ==============================================
+USE appbiosalud;
+-- Procedimiento para registrar muestra
+DELIMITER //
+CREATE PROCEDURE sp_registrar_muestra (
+    IN p_fecha_hora DATETIME,
+    IN p_tipo_muestra VARCHAR(50),
+    IN p_id_orden INT,
+    IN p_id_tecnico INT
+)
+BEGIN
+    INSERT INTO toma_muestra (fecha_hora, tipo_muestra, id_orden, id_tecnico)
+    VALUES (p_fecha_hora, p_tipo_muestra, p_id_orden, p_id_tecnico);
+END //
+DELIMITER ;
+
+-- Procedimiento para actualizar muestra
+DELIMITER //
+CREATE PROCEDURE sp_actualizar_muestra (
+    IN p_id_muestra INT,
+    IN p_fecha_hora DATETIME,
+    IN p_tipo_muestra VARCHAR(50),
+    IN p_id_orden INT,
+    IN p_id_tecnico INT
+)
+BEGIN
+    UPDATE toma_muestra
+    SET fecha_hora = p_fecha_hora,
+        tipo_muestra = p_tipo_muestra,
+        id_orden = p_id_orden,
+        id_tecnico = p_id_tecnico
+    WHERE id_muestra = p_id_muestra;
+END //
+DELIMITER ;
+
+-- Procedimiento para eliminar muestra
+DELIMITER //
+CREATE PROCEDURE sp_eliminar_muestra (
+    IN p_id_muestra INT
+)
+BEGIN
+    DELETE FROM toma_muestra WHERE id_muestra = p_id_muestra;
+END //
+DELIMITER ;
+
+-- Procedimiento para buscar muestra
+DELIMITER //
+CREATE PROCEDURE sp_buscar_muestra (
+    IN p_id_muestra INT
+)
+BEGIN
+    SELECT *
+    FROM toma_muestra
+    WHERE id_muestra = p_id_muestra;
+END //
+DELIMITER ;
+
+-- Procedimiento para listar muestras
+DELIMITER //
+CREATE PROCEDURE sp_listar_muestras ()
+BEGIN
+    SELECT *
+    FROM toma_muestra
+    ORDER BY id_muestra DESC;
+END //
+DELIMITER ;
+-- ==================================================
+-- PROCEDIMIENTOS ALMACENADOS PARA ORDEN LABORATORIO
+-- ==================================================
+USE appbiosalud;
+-- INSERTAR
+DROP PROCEDURE IF EXISTS sp_insert_orden_lab
+DELIMITER //
+CREATE PROCEDURE sp_insert_orden_lab(
+  IN p_fecha DATETIME,
+  IN p_tipoExamen VARCHAR(255),
+  IN p_observaciones TEXT,
+  IN p_idPaciente INT,
+  IN p_idMedico INT
+)
+BEGIN
+  INSERT INTO orden_laboratorio(fecha_orden, tipo_examen, observaciones, id_paciente, id_medico)
+  VALUES(p_fecha, p_tipoExamen, p_observaciones, p_idPaciente, p_idMedico);
+END //
+DELIMITER ;
+
+-- ACTUALIZAR
+DROP PROCEDURE IF EXISTS sp_update_orden_lab
+DELIMITER //
+CREATE PROCEDURE sp_update_orden_lab(
+  IN p_idOrden INT,
+  IN p_fecha DATETIME,
+  IN p_tipoExamen VARCHAR(255),
+  IN p_observaciones TEXT,
+  IN p_estado VARCHAR(50),
+  IN p_idPaciente INT,
+  IN p_idMedico INT
+)
+BEGIN
+  UPDATE orden_laboratorio
+  SET fecha_orden = p_fecha,
+      tipo_examen = p_tipoExamen,
+      observaciones = p_observaciones,
+      estado = p_estado,
+      id_paciente = p_idPaciente,
+      id_medico = p_idMedico
+  WHERE id_orden = p_idOrden;
+END //
+DELIMITER ;
+
+-- ELIMINAR
+DROP PROCEDURE IF EXISTS sp_delete_orden_lab
+DELIMITER //
+CREATE PROCEDURE sp_delete_orden_lab(IN p_idOrden INT)
+BEGIN
+  DELETE FROM orden_laboratorio WHERE id_orden = p_idOrden;
+END //
+DELIMITER ;
+
+-- LISTAR TODOS
+DROP PROCEDURE IF EXISTS sp_list_orden_lab
+DELIMITER //
+CREATE PROCEDURE sp_list_orden_lab()
+BEGIN
+  SELECT * FROM orden_laboratorio;
+END //
+DELIMITER ;
+
+-- BUSCAR POR ID
+DROP PROCEDURE IF EXISTS sp_find_orden_lab
+DELIMITER //
+CREATE PROCEDURE sp_find_orden_lab(IN p_idOrden INT)
+BEGIN
+  SELECT * FROM orden_laboratorio WHERE id_orden = p_idOrden;
 END //
 DELIMITER ;
