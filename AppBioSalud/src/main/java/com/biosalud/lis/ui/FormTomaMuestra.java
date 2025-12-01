@@ -5,6 +5,21 @@
 package com.biosalud.lis.ui;
 
 import javax.swing.table.DefaultTableModel;
+import com.biosalud.lis.controller.TomaMuestraController;
+import com.biosalud.lis.model.TomaMuestra;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.PdfPTable;
+import java.io.FileOutputStream;
+import java.io.File;
+import java.awt.Desktop;
 
 /**
  *
@@ -16,17 +31,173 @@ public class FormTomaMuestra extends javax.swing.JPanel {
      * Creates new form FormTomaMuestra
      */
     private final DefaultTableModel mDefaultTableModel;
+    private final TomaMuestraController controller = new TomaMuestraController();
+    private final DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    private void cargarTabla() {
+        try {
+            // Limpiar tabla
+            mDefaultTableModel.setRowCount(0);
+
+            // Obtener lista
+            List<TomaMuestra> lista = controller.listar();
+
+            if (lista == null) {
+                System.err.println("controller.listar() devolvió NULL");
+                return;
+            }
+
+            // Llenar tabla
+            for (TomaMuestra m : lista) {
+                mDefaultTableModel.addRow(new Object[]{
+                    m.getIdMuestra(),
+                    (m.getFechaHora() != null ? m.getFechaHora().format(formato) : ""),
+                    m.getTipoMuestra(),
+                    m.getIdOrden(),
+                    m.getIdTecnico()
+                });
+            }
+
+            // Asignar modelo por seguridad
+            jTable1.setModel(mDefaultTableModel);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "Error cargando tabla: " + e.getMessage());
+        }
+    }
+
+    private void registrarMuestra() {
+
+        try {
+            TomaMuestra m = new TomaMuestra();
+
+            m.setFechaHora(LocalDateTime.parse(FechaMuestra.getText(), formato));
+            m.setTipoMuestra(ComboTipo.getSelectedItem().toString());
+            m.setIdOrden(Integer.parseInt(OrdenMuestra.getText()));
+            m.setIdTecnico(Integer.parseInt(OrdenTecnico.getText()));
+
+            if (controller.registrar(m)) {
+                JOptionPane.showMessageDialog(this, "Muestra registrada correctamente.");
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al registrar.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Datos inválidos: " + e.getMessage());
+        }
+    }
+
+    private void actualizarMuestra() {
+
+        try {
+            TomaMuestra m = new TomaMuestra();
+
+            m.setIdMuestra(Integer.parseInt(IDMuestra.getText()));
+            m.setFechaHora(LocalDateTime.parse(FechaMuestra.getText(), formato));
+            m.setTipoMuestra(ComboTipo.getSelectedItem().toString());
+            m.setIdOrden(Integer.parseInt(OrdenMuestra.getText()));
+            m.setIdTecnico(Integer.parseInt(OrdenTecnico.getText()));
+
+            if (controller.actualizar(m)) {
+                JOptionPane.showMessageDialog(this, "Muestra actualizada.");
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Datos inválidos.");
+        }
+    }
+
+    private void eliminarMuestra() {
+        try {
+            int id = Integer.parseInt(IDMuestra.getText());
+
+            if (controller.eliminar(id)) {
+                JOptionPane.showMessageDialog(this, "Muestra eliminada.");
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al eliminar.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "ID inválido.");
+        }
+    }
+
+    private void imprimirPDF() {
+        try {
+            Document doc = new Document();
+            String ruta = "muestras_lista.pdf";
+            PdfWriter.getInstance(doc, new FileOutputStream(ruta));
+            doc.open();
+
+            doc.add(new Paragraph("LISTA DE MUESTRAS"));
+            doc.add(new Paragraph(" "));
+
+            PdfPTable pdfTable = new PdfPTable(jTable1.getColumnCount());
+
+            // Encabezados
+            for (int i = 0; i < jTable1.getColumnCount(); i++) {
+                pdfTable.addCell(jTable1.getColumnName(i));
+            }
+
+            // Filas
+            for (int r = 0; r < jTable1.getRowCount(); r++) {
+                for (int c = 0; c < jTable1.getColumnCount(); c++) {
+                    pdfTable.addCell(jTable1.getValueAt(r, c).toString());
+                }
+            }
+
+            doc.add(pdfTable);
+            doc.close();
+
+            Desktop.getDesktop().open(new File(ruta));
+            JOptionPane.showMessageDialog(this, "PDF generado correctamente.");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error generando PDF: " + e.getMessage());
+        }
+    }
+
+    private void buscarMuestra() {
+        try {
+            int id = Integer.parseInt(IDMuestra.getText().trim());
+
+            TomaMuestra m = controller.buscarPorId(id);
+
+            if (m == null) {
+                JOptionPane.showMessageDialog(this, "No encontrado");
+                return;
+            }
+
+            OrdenMuestra.setText(String.valueOf(m.getIdOrden()));
+            OrdenTecnico.setText(String.valueOf(m.getIdTecnico()));
+            ComboTipo.setSelectedItem(m.getTipoMuestra());
+            FechaMuestra.setText(m.getFechaHora().format(formato));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
 
     public FormTomaMuestra() {
         initComponents();
-        
+
         mDefaultTableModel = new DefaultTableModel();
         mDefaultTableModel.addColumn("ID MUESTRA");
-        mDefaultTableModel.addColumn("FECHA_HORA");
-        mDefaultTableModel.addColumn("TIPO DE EXAMEN");
+        mDefaultTableModel.addColumn("FECHA/HORA");
+        mDefaultTableModel.addColumn("TIPO EXAMEN");
         mDefaultTableModel.addColumn("ID ORDEN");
         mDefaultTableModel.addColumn("ID TECNICO");
-       
+
+        jTable1.setModel(mDefaultTableModel);
+        cargarTabla();
+
     }
 
     /**
@@ -146,6 +317,11 @@ public class FormTomaMuestra extends javax.swing.JPanel {
         btnIngresarMuestra.setBackground(new java.awt.Color(0, 153, 204));
         btnIngresarMuestra.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btnIngresarMuestra.setText("Registrar Muestra");
+        btnIngresarMuestra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarMuestraActionPerformed(evt);
+            }
+        });
 
         btnBuscarMuestra.setText("Buscar ");
         btnBuscarMuestra.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +345,7 @@ public class FormTomaMuestra extends javax.swing.JPanel {
 
         jLabel11.setText("Id Orden:");
 
-        jLabel13.setText("Técnico responsable:");
+        jLabel13.setText("ID del tecnico:");
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -320,7 +496,7 @@ public class FormTomaMuestra extends javax.swing.JPanel {
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
@@ -340,11 +516,11 @@ public class FormTomaMuestra extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarMuestraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMuestraActionPerformed
-        // TODO add your handling code here:
+        buscarMuestra();
     }//GEN-LAST:event_btnBuscarMuestraActionPerformed
 
     private void btnEliminarMuestraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarMuestraActionPerformed
-        // TODO add your handling code here:
+        eliminarMuestra();
     }//GEN-LAST:event_btnEliminarMuestraActionPerformed
 
     private void ComboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboTipoActionPerformed
@@ -352,12 +528,16 @@ public class FormTomaMuestra extends javax.swing.JPanel {
     }//GEN-LAST:event_ComboTipoActionPerformed
 
     private void btnActualizarMuestra1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarMuestra1ActionPerformed
-        // TODO add your handling code here:
+        actualizarMuestra();
     }//GEN-LAST:event_btnActualizarMuestra1ActionPerformed
 
     private void btnMuestrasRegistradas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuestrasRegistradas1ActionPerformed
-        // TODO add your handling code here:
+        imprimirPDF();
     }//GEN-LAST:event_btnMuestrasRegistradas1ActionPerformed
+
+    private void btnIngresarMuestraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarMuestraActionPerformed
+        registrarMuestra();
+    }//GEN-LAST:event_btnIngresarMuestraActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

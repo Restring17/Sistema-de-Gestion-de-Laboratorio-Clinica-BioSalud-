@@ -184,7 +184,7 @@
                   </Group>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
@@ -353,6 +353,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Registrar Muestra"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIngresarMuestraActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnBuscarMuestra">
           <Properties>
@@ -392,7 +395,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
-            <Property name="text" type="java.lang.String" value="T&#xe9;cnico responsable:"/>
+            <Property name="text" type="java.lang.String" value="ID del tecnico:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">

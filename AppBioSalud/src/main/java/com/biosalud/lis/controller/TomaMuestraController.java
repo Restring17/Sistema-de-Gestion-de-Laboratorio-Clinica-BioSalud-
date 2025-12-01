@@ -4,10 +4,37 @@
  */
 package com.biosalud.lis.controller;
 
+import com.biosalud.lis.model.TomaMuestra;
+import com.biosalud.lis.service.impl.TomaMuestraServiceImpl;
+import java.util.List;
+
 /**
+ * PATRÓN UTILIZADO: MVC (Controlador) -----------------------------------
+ * Controla la comunicación entre la vista (JFrame) y la capa de servicio.
  *
- * @author folli
+ * No contiene lógica pesada ni SQL.
  */
 public class TomaMuestraController {
-    
+
+    private final TomaMuestraServiceImpl service = new TomaMuestraServiceImpl();
+
+    public boolean registrar(TomaMuestra m) {
+        return service.registrar(m);
+    }
+
+    public boolean actualizar(TomaMuestra m) {
+        return service.actualizar(m);
+    }
+
+    public boolean eliminar(int id) {
+        return service.eliminar(id);
+    }
+
+    public List<TomaMuestra> listar() {
+        return service.listar();
+    }
+    public TomaMuestra buscarPorId(int id) {
+    return service.buscarPorId(id);
 }
+}
+
