@@ -33,8 +33,12 @@ public class TomaMuestraController {
     public List<TomaMuestra> listar() {
         return service.listar();
     }
-    public TomaMuestra buscarPorId(int id) {
-    return service.buscarPorId(id);
-}
-}
 
+    public TomaMuestra buscarPorId(int id) {
+        return service.buscarPorId(id);
+    }
+
+    public TomaMuestra buscarPorIdOrden(int idOrden) {
+        return service.buscarPorIdOrden(idOrden);
+    }
+}

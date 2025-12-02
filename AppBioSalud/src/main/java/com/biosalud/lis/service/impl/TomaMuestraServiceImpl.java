@@ -41,4 +41,9 @@ public class TomaMuestraServiceImpl implements TomaMuestraService {
         return dao.buscarPorId(id);
     }
 
+    @Override
+    public TomaMuestra buscarPorIdOrden(int idOrden) {
+        return dao.buscarPorIdOrden(idOrden);
+    }
+
 }

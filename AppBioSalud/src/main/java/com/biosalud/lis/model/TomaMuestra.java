@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.biosalud.lis.model;
+
 import java.time.LocalDateTime;
 
 /**
@@ -13,10 +14,8 @@ import java.time.LocalDateTime;
  *
  * Su única responsabilidad: representar la estructura del dato.
  */
-
 /**
- * MODELO: TomaMuestra
- * Representa la tabla toma_muestra de la base de datos.
+ * MODELO: TomaMuestra Representa la tabla toma_muestra de la base de datos.
  */
 public class TomaMuestra {
 
@@ -25,21 +24,29 @@ public class TomaMuestra {
     private String tipoMuestra;
     private int idOrden;
     private int idTecnico;
+    private int idPaciente;
 
     // ===== CONSTRUCTORES =====
-
     public TomaMuestra() {
     }
 
-    public TomaMuestra(int idMuestra, LocalDateTime fechaHora, String tipoMuestra, int idOrden, int idTecnico) {
+    public TomaMuestra(int idMuestra, LocalDateTime fechaHora, String tipoMuestra, int idOrden, int idTecnico, int idPaciente) {
         this.idMuestra = idMuestra;
         this.fechaHora = fechaHora;
         this.tipoMuestra = tipoMuestra;
         this.idOrden = idOrden;
         this.idTecnico = idTecnico;
+        this.idPaciente = idPaciente;
     }
 
     // ===== GETTERS & SETTERS =====
+    public int getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
+    }
 
     public int getIdMuestra() {
         return idMuestra;
@@ -82,5 +89,3 @@ public class TomaMuestra {
     }
 
 }
-
-

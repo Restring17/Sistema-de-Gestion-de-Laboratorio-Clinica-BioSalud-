@@ -26,6 +26,8 @@ public interface TomaMuestraService {
     List<TomaMuestra> listar();
     
     TomaMuestra buscarPorId(int id);
+    
+    TomaMuestra buscarPorIdOrden(int idOrden);
 
 }
 

@@ -21,6 +21,8 @@ public interface TomaMuestraDAO {
     boolean eliminar(int idMuestra);
 
     TomaMuestra buscarPorId(int id);
+    
+    TomaMuestra buscarPorIdOrden(int idOrden);
 
     List<TomaMuestra> listar();
 }

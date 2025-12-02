@@ -13,7 +13,7 @@ public class TomaMuestraDAOImpl implements TomaMuestraDAO {
 
     @Override
     public boolean registrar(TomaMuestra m) {
-        String sql = "{CALL sp_registrar_muestra(?, ?, ?, ?)}";
+        String sql = "{CALL sp_registrar_muestra(?, ?, ?, ?, ?)}";
 
         try (Connection conn = DBConnection.getInstance().getConnection(); CallableStatement cs = conn.prepareCall(sql)) {
 
@@ -21,6 +21,7 @@ public class TomaMuestraDAOImpl implements TomaMuestraDAO {
             cs.setString(2, m.getTipoMuestra());
             cs.setInt(3, m.getIdOrden());
             cs.setInt(4, m.getIdTecnico());
+            cs.setInt(5,m.getIdPaciente());
 
             return cs.executeUpdate() > 0;
 
@@ -32,7 +33,7 @@ public class TomaMuestraDAOImpl implements TomaMuestraDAO {
 
     @Override
     public boolean actualizar(TomaMuestra m) {
-        String sql = "{CALL sp_actualizar_muestra(?, ?, ?, ?, ?)}";
+        String sql = "{CALL sp_actualizar_muestra(?, ?, ?, ?, ?, ?)}";
 
         try (Connection conn = DBConnection.getInstance().getConnection(); CallableStatement cs = conn.prepareCall(sql)) {
 
@@ -111,6 +112,7 @@ public class TomaMuestraDAOImpl implements TomaMuestraDAO {
                 m.setTipoMuestra(rs.getString("tipo_muestra"));
                 m.setIdOrden(rs.getInt("id_orden"));
                 m.setIdTecnico(rs.getInt("id_tecnico"));
+                m.setIdPaciente(rs.getInt("id_paciente"));
 
                 lista.add(m);
             }
@@ -120,6 +122,36 @@ public class TomaMuestraDAOImpl implements TomaMuestraDAO {
         }
 
         return lista;
+    }
+
+    @Override
+    public TomaMuestra buscarPorIdOrden(int idOrden) {
+            String sql = "{CALL sp_buscar_muestra_por_orden(?)}";
+
+    try (Connection conn = DBConnection.getInstance().getConnection();
+         CallableStatement cs = conn.prepareCall(sql)) {
+
+        cs.setInt(1, idOrden);
+        ResultSet rs = cs.executeQuery();
+
+        if (rs.next()) {
+            TomaMuestra m = new TomaMuestra();
+
+            m.setIdMuestra(rs.getInt("id_muestra"));
+            m.setFechaHora(rs.getTimestamp("fecha_hora").toLocalDateTime());
+            m.setTipoMuestra(rs.getString("tipo_muestra"));
+            m.setIdOrden(rs.getInt("id_orden"));
+            m.setIdTecnico(rs.getInt("id_tecnico"));
+            m.setIdPaciente(rs.getInt("id_paciente"));
+
+            return m;
+        }
+
+    } catch (Exception e) {
+        System.out.println("ERROR buscarPorIdOrden: " + e.getMessage());
+    }
+
+    return null;
     }
 }
 
