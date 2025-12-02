@@ -142,7 +142,7 @@ public class FormOrdenLaboratorio extends javax.swing.JPanel {
             }
         });
 
-        jLabel8.setText("Paciente:");
+        jLabel8.setText("ID Paciente:");
 
         jLabel9.setText("Fecha:");
 

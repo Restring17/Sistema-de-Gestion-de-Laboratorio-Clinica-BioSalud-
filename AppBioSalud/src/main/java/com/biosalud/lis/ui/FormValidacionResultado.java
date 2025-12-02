@@ -159,7 +159,7 @@ public class FormValidacionResultado extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane17 = new javax.swing.JScrollPane();
         IDOrden = new javax.swing.JTextPane();
-        btnImprimirResultado = new javax.swing.JButton();
+        btnValidarResultado = new javax.swing.JButton();
         jScrollPane18 = new javax.swing.JScrollPane();
         IDResultado = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -204,13 +204,13 @@ public class FormValidacionResultado extends javax.swing.JPanel {
 
         jScrollPane17.setViewportView(IDOrden);
 
-        btnImprimirResultado.setBackground(new java.awt.Color(0, 102, 153));
-        btnImprimirResultado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnImprimirResultado.setText("Validar");
-        btnImprimirResultado.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnImprimirResultado.addActionListener(new java.awt.event.ActionListener() {
+        btnValidarResultado.setBackground(new java.awt.Color(0, 102, 153));
+        btnValidarResultado.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnValidarResultado.setText("Validar");
+        btnValidarResultado.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnValidarResultado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirResultadoActionPerformed(evt);
+                btnValidarResultadoActionPerformed(evt);
             }
         });
 
@@ -241,20 +241,24 @@ public class FormValidacionResultado extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(107, 107, 107)
-                                .addComponent(jScrollPane19))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(107, 107, 107)
+                                    .addComponent(jScrollPane19))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel12)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel18))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane17, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel18))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane17, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel15)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -262,7 +266,7 @@ public class FormValidacionResultado extends javax.swing.JPanel {
                                     .addComponent(btnLimpiarResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnbuscarResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(10, 10, 10))
-                            .addComponent(btnImprimirResultado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnValidarResultado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -271,7 +275,6 @@ public class FormValidacionResultado extends javax.swing.JPanel {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel17)
-                                    .addComponent(jLabel15)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
                                     .addComponent(jScrollPane2))))))
                 .addGap(133, 133, 133))
@@ -309,12 +312,16 @@ public class FormValidacionResultado extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4)
-                .addComponent(btnImprimirResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(btnValidarResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -322,8 +329,8 @@ public class FormValidacionResultado extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 34, Short.MAX_VALUE))
+                .addComponent(jScrollPane20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -354,55 +361,9 @@ public class FormValidacionResultado extends javax.swing.JPanel {
         limpiarResultado();
     }//GEN-LAST:event_btnLimpiarResultadoActionPerformed
 
-    private void btnImprimirResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirResultadoActionPerformed
-        try {
-            int id = Integer.parseInt(IDResultado.getText().trim());
-            ResultadoLaboratorio r = controller.buscarPorId(id);
-
-            if (r == null) {
-                JOptionPane.showMessageDialog(this, "No se encontró el resultado.");
-                return;
-            }
-
-            String fileName = "Resultado_" + r.getIdResultado() + ".pdf";
-
-            com.lowagie.text.Document pdf = new com.lowagie.text.Document();
-            com.lowagie.text.pdf.PdfWriter.getInstance(pdf, new java.io.FileOutputStream(fileName));
-
-            pdf.open();
-
-            com.lowagie.text.Font titleFont = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 20, com.lowagie.text.Font.BOLD);
-            com.lowagie.text.Font normalFont = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 12);
-
-            pdf.add(new com.lowagie.text.Paragraph("REPORTE DE RESULTADO DE LABORATORIO", titleFont));
-            pdf.add(new com.lowagie.text.Paragraph(" "));
-
-            pdf.add(new com.lowagie.text.Paragraph("ID Resultado: " + r.getIdResultado(), normalFont));
-            pdf.add(new com.lowagie.text.Paragraph("Fecha: " + r.getFechaResultado(), normalFont));
-            pdf.add(new com.lowagie.text.Paragraph("ID Orden: " + r.getIdOrden(), normalFont));
-            pdf.add(new com.lowagie.text.Paragraph("Validado: " + (r.isValidado() ? "Sí" : "No"), normalFont));
-            pdf.add(new com.lowagie.text.Paragraph(" "));
-
-            pdf.add(new com.lowagie.text.Paragraph("Descripción:", titleFont));
-            pdf.add(new com.lowagie.text.Paragraph(r.getDescripcion(), normalFont));
-            pdf.add(new com.lowagie.text.Paragraph(" "));
-
-            pdf.add(new com.lowagie.text.Paragraph("Valores:", titleFont));
-            pdf.add(new com.lowagie.text.Paragraph(r.getValoresJson(), normalFont));
-            pdf.add(new com.lowagie.text.Paragraph(" "));
-
-            pdf.add(new com.lowagie.text.Paragraph("Conclusiones:", titleFont));
-            pdf.add(new com.lowagie.text.Paragraph(r.getConclusiones(), normalFont));
-            pdf.add(new com.lowagie.text.Paragraph(" "));
-
-            pdf.close();
-
-            JOptionPane.showMessageDialog(this, "PDF generado:\n" + fileName);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "ERROR al generar PDF: " + e.getMessage());
-        }
-    }//GEN-LAST:event_btnImprimirResultadoActionPerformed
+    private void btnValidarResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarResultadoActionPerformed
+        validarResultado();
+    }//GEN-LAST:event_btnValidarResultadoActionPerformed
 
     private void btnbuscarResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarResultadoActionPerformed
         buscarResultado();
@@ -416,8 +377,8 @@ public class FormValidacionResultado extends javax.swing.JPanel {
     private javax.swing.JTextPane FechaResultado;
     private javax.swing.JTextPane IDOrden;
     private javax.swing.JTextPane IDResultado;
-    private javax.swing.JButton btnImprimirResultado;
     private javax.swing.JButton btnLimpiarResultado;
+    private javax.swing.JButton btnValidarResultado;
     private javax.swing.JButton btnbuscarResultado;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;

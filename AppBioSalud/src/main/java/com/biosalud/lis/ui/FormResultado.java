@@ -136,23 +136,6 @@ public class FormResultado extends javax.swing.JPanel {
         }
     }
 
-    private void validarResultado() {
-        if (IDResultado.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese un ID.");
-            return;
-        }
-
-        ResultadoLaboratorio r = obtenerResultadoDesdeFormulario();
-
-        boolean ok = controller.validarResultado(r);
-
-        if (ok) {
-            JOptionPane.showMessageDialog(this, "Resultado VALIDADO.");
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo validar.", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     private void cargarResultados() {
         ResultadoController controller = new ResultadoController();
         List<ResultadoLaboratorio> lista = controller.listar();
@@ -472,7 +455,7 @@ public class FormResultado extends javax.swing.JPanel {
 
         jLabel12.setText("ID Orden:");
 
-        jLabel4.setText("ID Muestra :");
+        jLabel4.setText("ID Resultado :");
 
         jLabel14.setText("Fecha:");
 
