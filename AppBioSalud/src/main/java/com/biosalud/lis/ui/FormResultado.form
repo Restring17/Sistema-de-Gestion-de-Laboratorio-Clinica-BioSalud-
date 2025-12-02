@@ -645,6 +645,9 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JTextPane" name="FechaResultado">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="yy-mm-ddThh-mm"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

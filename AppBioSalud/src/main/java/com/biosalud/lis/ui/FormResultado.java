@@ -463,6 +463,7 @@ public class FormResultado extends javax.swing.JPanel {
 
         jLabel16.setText("Conclusiones:");
 
+        FechaResultado.setText("yy-mm-ddThh-mm");
         jScrollPane17.setViewportView(FechaResultado);
 
         btnActualizarResultado.setText("Actualizar");
