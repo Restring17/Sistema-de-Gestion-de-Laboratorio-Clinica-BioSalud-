@@ -253,7 +253,7 @@ public class FormOrdenLaboratorio extends javax.swing.JPanel {
 
         jLabel1.setText("Cantidad de Ordenes:");
 
-        cantOrdenes.setText("jLabel2");
+        cantOrdenes.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -344,9 +344,10 @@ public class FormOrdenLaboratorio extends javax.swing.JPanel {
 
             o.setTipoExamen(cmbTipoExamen.getSelectedItem().toString());
             o.setObservaciones(jTxtObservaciones.getText());
-            o.setEstado("Pendiente"); // o tu lógica
 
-            controller.actualizarOrden(o);
+            o.setEstado("VALIDADO");
+
+            controller.actualizarOrden(o); // controller.actualizarOrden(o) debe manejar el UPDATE
 
             cargarTabla();
             limpiarCampos();

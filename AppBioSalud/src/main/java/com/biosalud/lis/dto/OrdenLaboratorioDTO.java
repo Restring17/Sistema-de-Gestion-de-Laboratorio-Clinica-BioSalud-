@@ -16,8 +16,6 @@ public class OrdenLaboratorioDTO {
     public OrdenLaboratorioDTO() {
     }
 
-   
-
     public int getIdOrden() {
         return idOrden;
     }

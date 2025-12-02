@@ -16,13 +16,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public Usuario buscarPorUsername(String username) {
-        String sql = "SELECT * FROM usuario WHERE username=?";
+        String sql = "{CALL sp_buscar_usuario_por_username(?)}";
         Usuario u = null;
 
-        try (Connection conn = DBConnection.getInstance().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getInstance().getConnection(); CallableStatement cs = conn.prepareCall(sql)) {
 
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
+            cs.setString(1, username);
+            ResultSet rs = cs.executeQuery();
 
             if (rs.next()) {
                 u = mapUsuario(rs);
@@ -92,9 +92,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     @Override
     public List<Usuario> listar() {
         List<Usuario> lista = new ArrayList<>();
-        String sql = "SELECT * FROM usuario ORDER BY id_usuario";
+        String sql = "{CALL sp_listar_usuarios()}";
 
-        try (Connection conn = DBConnection.getInstance().getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        try (Connection conn = DBConnection.getInstance().getConnection(); CallableStatement cs = conn.prepareCall(sql); ResultSet rs = cs.executeQuery()) {
 
             while (rs.next()) {
                 lista.add(mapUsuario(rs));
