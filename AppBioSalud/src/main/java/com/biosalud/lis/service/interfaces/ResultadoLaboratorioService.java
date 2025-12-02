@@ -4,10 +4,20 @@
  */
 package com.biosalud.lis.service.interfaces;
 
-/**
- *
- * @author folli
- */
+import com.biosalud.lis.model.ResultadoLaboratorio;
+import java.util.List;
+
 public interface ResultadoLaboratorioService {
-    
+
+    boolean registrar(ResultadoLaboratorio r);
+
+    boolean actualizar(ResultadoLaboratorio r);
+
+    boolean eliminar(int idResultado);
+
+    ResultadoLaboratorio buscarPorId(int idResultado);
+
+    List<ResultadoLaboratorio> listar();
+
+    boolean validarResultado(int idResultado, boolean validado);
 }

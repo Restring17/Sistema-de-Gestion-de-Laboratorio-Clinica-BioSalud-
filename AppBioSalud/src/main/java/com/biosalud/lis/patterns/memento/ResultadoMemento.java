@@ -4,10 +4,17 @@
  */
 package com.biosalud.lis.patterns.memento;
 
-/**
- *
- * @author folli
- */
+import com.biosalud.lis.model.ResultadoLaboratorio;
+
 public class ResultadoMemento {
-    
+
+    private final ResultadoLaboratorio estado;
+
+    public ResultadoMemento(ResultadoLaboratorio estado) {
+        this.estado = estado;
+    }
+
+    public ResultadoLaboratorio getEstado() {
+        return estado;
+    }
 }

@@ -4,10 +4,27 @@
  */
 package com.biosalud.lis.patterns.memento;
 
-/**
- *
- * @author folli
- */
+
+import java.util.ArrayList;
+
+import java.util.List;
+
 public class ResultadoCareTaker {
-    
+
+    private final List<ResultadoMemento> historial = new ArrayList<>();
+
+    public void agregarMemento(ResultadoMemento m) {
+        historial.add(m);
+    }
+
+    public ResultadoMemento obtenerMemento(int index) {
+        if (index >= 0 && index < historial.size()) {
+            return historial.get(index);
+        }
+        return null;
+    }
+
+    public int totalEstados() {
+        return historial.size();
+    }
 }

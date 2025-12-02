@@ -4,10 +4,26 @@
  */
 package com.biosalud.lis.patterns.iterator;
 
-/**
- *
- * @author folli
- */
-public class ResultadoIterator {
-    
+import com.biosalud.lis.model.ResultadoLaboratorio;
+import java.util.Iterator;
+import java.util.List;
+
+public class ResultadoIterator implements Iterator<ResultadoLaboratorio> {
+
+    private final List<ResultadoLaboratorio> lista;
+    private int posicion = 0;
+
+    public ResultadoIterator(List<ResultadoLaboratorio> lista) {
+        this.lista = lista;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return posicion < lista.size();
+    }
+
+    @Override
+    public ResultadoLaboratorio next() {
+        return lista.get(posicion++);
+    }
 }
